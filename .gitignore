@@ -52,6 +52,7 @@ TestResults/
 ######################
 *.log
 *.sqlite
+*.db
 # OS generated files #
 ######################
 .DS_Store?
@@ -73,3 +74,7 @@ _[Ss]cripts
 *.nupkg
 *.ncrunchsolution
 *.dot[Cc]over
+####################
+# Rider #
+####################
+.idea/

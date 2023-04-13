@@ -3,9 +3,9 @@ using WarhammerTournaments.Models;
 
 namespace WarhammerTournaments.Data;
 
-public class ApplicationContext : DbContext
+public class ApplicationDbContext : DbContext
 {
-    public ApplicationContext(DbContextOptions<ApplicationContext> option) : base(option)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> option) : base(option)
     {
     }
 
