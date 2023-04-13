@@ -1,12 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
+using WarhammerTournaments.Interfaces;
 
 namespace WarhammerTournaments.Controllers;
 
 public class DetailsController : Controller
 {
-    // GET
-    public IActionResult Index()
+    private readonly ITournamentRepository _tournamentRepository;
+
+    public DetailsController(ITournamentRepository tournamentRepository)
     {
-        return View();
+        _tournamentRepository = tournamentRepository;
+    }
+
+    // GET
+    public async Task<IActionResult> Index(int id)
+    {
+        return View(await _tournamentRepository.GetByIdAsync(id));
     }
 }

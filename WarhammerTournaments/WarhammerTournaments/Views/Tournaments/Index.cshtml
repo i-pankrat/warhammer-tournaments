@@ -13,7 +13,10 @@
                         <h4 class="card-title">@item.Title</h4>
                         <p class="card-text">@item.Description</p>
                         <p class="card-text">@item.Date.ToString("g")</p>
-                        <a href="#" class="btn btn-primary">Read More</a>
+                        <a type="btn btn-success" asp-controller="Details" asp-action="Index" asp-route-id="@item.Id"
+                           class="btn btn-sm btn-outline-secondary">
+                            Details
+                        </a>
                     </div>
                 </div>
             }
