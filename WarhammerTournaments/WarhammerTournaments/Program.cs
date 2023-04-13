@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using WarhammerTournaments.Data;
 using WarhammerTournaments.Interfaces;
 using WarhammerTournaments.Repository;
+using WarhammerTournaments.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<ITournamentRepository, TournamentRepository>();
+builder.Services.AddScoped<IImageUploadService, ImageUploadService>();
 
 var app = builder.Build();
 
