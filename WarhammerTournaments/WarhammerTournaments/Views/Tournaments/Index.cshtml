@@ -16,7 +16,11 @@
                         <p class="card-text">@item.Date.ToString("g")</p>
                         <a type="btn btn-success" asp-controller="Details" asp-action="Index" asp-route-id="@item.Id"
                            class="btn btn-sm btn-outline-secondary">
-                            Details
+                            Детали
+                        </a>
+                        <a type="btn btn-success" asp-controller="Tournaments" asp-action="Edit" asp-route-id="@item.Id"
+                           class="btn btn-sm btn-outline-secondary">
+                            Редактировать
                         </a>
                     </div>
                 </div>

@@ -24,4 +24,12 @@ public class ImageUploadService : IImageUploadService
         await image.CopyToAsync(fileStream);
         return path;
     }
+
+    public void Delete(string image)
+    {
+        if (File.Exists(image))
+        {
+            File.Delete(image);
+        }
+    }
 }

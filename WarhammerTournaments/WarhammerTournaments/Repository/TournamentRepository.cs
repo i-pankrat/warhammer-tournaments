@@ -24,6 +24,11 @@ public class TournamentRepository : ITournamentRepository
         return await _context.Tournaments.FirstOrDefaultAsync(i => i.Id == id);
     }
 
+    public async Task<Tournament> GetByIdAsyncNoTracking(int id)
+    {
+        return await _context.Tournaments.AsNoTracking().FirstOrDefaultAsync(i => i.Id == id);
+    }
+
     public bool Add(Tournament tournament)
     {
         // just generate sql

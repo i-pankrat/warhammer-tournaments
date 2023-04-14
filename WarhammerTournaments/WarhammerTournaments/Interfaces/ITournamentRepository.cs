@@ -6,6 +6,7 @@ public interface ITournamentRepository
 {
     public Task<IEnumerable<Tournament>> GetAll();
     public Task<Tournament> GetByIdAsync(int id);
+    public Task<Tournament> GetByIdAsyncNoTracking(int id);
     public bool Add(Tournament tournament);
     public bool Update(Tournament tournament);
     public bool Delete(Tournament tournament);
