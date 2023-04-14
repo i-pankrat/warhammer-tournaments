@@ -99,4 +99,18 @@ public class TournamentsController : Controller
 
         return View(tournamentViewModel);
     }
+
+    public async Task<IActionResult> Delete(int id)
+    {
+        var tournament = await _tournamentRepository.GetByIdAsync(id);
+
+        if (tournament != null)
+        {
+            _imageUploadService.Delete(tournament.ImageName);
+            _tournamentRepository.Delete(tournament);
+            return RedirectToAction("Index");
+        }
+
+        return View("Error");
+    }
 }
