@@ -51,6 +51,7 @@ images/
 ######################
 # Logs and databases #
 ######################
+Migrations/
 *.log
 *.sqlite
 *.db
