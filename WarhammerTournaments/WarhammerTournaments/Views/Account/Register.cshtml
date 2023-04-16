@@ -2,48 +2,105 @@
 
 @{
     ViewData["Title"] = "Sign up";
+    Layout = "_EmptyLayout";
 }
 
-<div class="row">
-    <div class="col-md-6 offset-3">
-        <p>
-            <h4>Sign up for a new account</h4>
-        </p>
-
-        @if (TempData["Error"] != null)
-        {
-            <div class="col-md-12 alert alert-danger">
-                <span><b>Sorry!</b> - @TempData["Error"] </span>
-            </div>
-        }
-
+<section class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
+    <div class="container">
         <div class="row">
-            <div class="col-md-8 offset-2">
-                <form asp-action="Register">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                    <div class="form-group">
-                        <label asp-for="EmailAddress" class="control-label"></label>
-                        <input asp-for="EmailAddress" class="form-control"/>
-                        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+            <div class="col-md-4 mx-auto rounded shadow login-background">
+                <div class="row">
+                    <div class="col">
+                        <div class="text-white m-5 text-center">
+                            <h1>Регистрация</h1>
+                        </div>
+                        <div>
+                            <form asp-action="Register" class="m-5">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group">
+                                    <div class="mb-3">
+                                        <label asp-for="EmailAddress" class="control-label text-white">Почта</label>
+                                        <input asp-for="EmailAddress" class="form-control text-white form-control-grey-ng" type="text" id="username"/>
+                                        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="mb-3">
+                                        <label asp-for="Username" class="control-label text-white">Имя</label>
+                                        <input asp-for="Username" class="form-control text-white form-control-grey-ng" type="text" id="username"/>
+                                        <span asp-validation-for="Username" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="mb-3">
+                                        <label asp-for="Password" class="control-label text-white" for="password">Пароль</label>
+                                        <input asp-for="Password" class="form-control text-white form-control-grey-ng" type="password" id="password"/>
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="mb-3">
+                                        <label asp-for="Password" class="control-label text-white" for="password">Повторите пароль</label>
+                                        <input asp-for="Password" class="form-control text-white form-control-grey-ng" type="password" id="password"/>
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row mb-3">
+                                        <div>
+                                            <input type="submit" class="form-control btn btn-outline-success text-white login-btn-bg mt-3" value="Зарегистрироваться">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="Password" class="control-label"></label>
-                        <input asp-for="Password" class="form-control"/>
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ConfirmPassword" class="control-label"></label>
-                        <input asp-for="ConfirmPassword" class="form-control"/>
-                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <input class="btn btn-outline-success float-right" type="submit" value="Зарегестрироваться"/>
-                        <a class="btn btn-outline-secondary" asp-controller="Tournaments" asp-action="Index">Отмена</a>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</section>
+
+@* <div class="row"> *@
+@*     <div class="col-md-6 offset-3"> *@
+@*         <p> *@
+@*             <h4>Sign up for a new account</h4> *@
+@*         </p> *@
+@* *@
+@*         @if (TempData["Error"] != null) *@
+@*         { *@
+@*             <div class="col-md-12 alert alert-danger"> *@
+@*                 <span><b>Sorry!</b> - @TempData["Error"] </span> *@
+@*             </div> *@
+@*         } *@
+@* *@
+@*         <div class="row"> *@
+@*             <div class="col-md-8 offset-2"> *@
+@*                 <form asp-action="Register"> *@
+@*                     <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
+@* *@
+@*                     <div class="form-group"> *@
+@*                         <label asp-for="EmailAddress" class="control-label"></label> *@
+@*                         <input asp-for="EmailAddress" class="form-control"/> *@
+@*                         <span asp-validation-for="EmailAddress" class="text-danger"></span> *@
+@*                     </div> *@
+@*                     <div class="form-group"> *@
+@*                         <label asp-for="Password" class="control-label"></label> *@
+@*                         <input asp-for="Password" class="form-control"/> *@
+@*                         <span asp-validation-for="Password" class="text-danger"></span> *@
+@*                     </div> *@
+@*                     <div class="form-group"> *@
+@*                         <label asp-for="ConfirmPassword" class="control-label"></label> *@
+@*                         <input asp-for="ConfirmPassword" class="form-control"/> *@
+@*                         <span asp-validation-for="ConfirmPassword" class="text-danger"></span> *@
+@*                     </div> *@
+@* *@
+@*                     <div class="form-group"> *@
+@*                         <input class="btn btn-outline-success float-right" type="submit" value="Зарегестрироваться"/> *@
+@*                         <a class="btn btn-outline-secondary" asp-controller="Tournaments" asp-action="Index">Отмена</a> *@
+@*                     </div> *@
+@*                 </form> *@
+@*             </div> *@
+@*         </div> *@
+@*     </div> *@
+@* </div> *@

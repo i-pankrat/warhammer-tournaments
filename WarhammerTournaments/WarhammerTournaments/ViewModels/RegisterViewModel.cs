@@ -8,6 +8,10 @@ public class RegisterViewModel
     [Required(ErrorMessage = "Email address is required")]
     public string EmailAddress { get; set; }
 
+    [Display(Name = "Username")]
+    [Required(ErrorMessage = "Username is required")]
+    public string Username { get; set; }
+
     [Display(Name = "Password")]
     [Required(ErrorMessage = "Password address is required")]
     [DataType(DataType.Password)]
