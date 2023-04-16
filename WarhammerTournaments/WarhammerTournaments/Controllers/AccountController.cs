@@ -96,8 +96,7 @@ public class AccountController : Controller
 
         return RedirectToAction("Index", "Tournaments");
     }
-
-    [HttpPost]
+    
     public async Task<IActionResult> Logout()
     {
         await _signInManager.SignOutAsync();

@@ -9,11 +9,14 @@ public class TournamentsController : Controller
 {
     private readonly ITournamentRepository _tournamentRepository;
     private readonly IImageUploadService _imageUploadService;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public TournamentsController(ITournamentRepository tournamentRepository, IImageUploadService imageUploadService)
+    public TournamentsController(ITournamentRepository tournamentRepository, IImageUploadService imageUploadService,
+        IHttpContextAccessor httpContextAccessor)
     {
         _tournamentRepository = tournamentRepository;
         _imageUploadService = imageUploadService;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     // GET
@@ -23,6 +26,17 @@ public class TournamentsController : Controller
         return View(tournaments);
     }
 
+    public IActionResult Create()
+    {
+        var curUserId = _httpContextAccessor.HttpContext.User.GetUserId();
+        var tournamentViewModel = new TournamentViewModel
+        {
+            UserId = curUserId
+        };
+        return View(tournamentViewModel);
+    }
+
+    [HttpPost]
     public async Task<IActionResult> Create(TournamentViewModel tournamentViewModel)
     {
         if (ModelState.IsValid)
@@ -33,6 +47,7 @@ public class TournamentsController : Controller
                 Title = tournamentViewModel.Title,
                 Description = tournamentViewModel.Description,
                 ParticipantNumber = tournamentViewModel.ParticipantNumber,
+                UserId = tournamentViewModel.UserId,
                 Date = tournamentViewModel.Date,
                 ImageName = fileName,
                 EntranceFee = tournamentViewModel.EntranceFee

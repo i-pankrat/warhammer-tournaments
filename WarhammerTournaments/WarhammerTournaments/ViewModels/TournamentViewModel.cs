@@ -4,6 +4,7 @@ public class TournamentViewModel
 {
     public string Title { get; set; }
     public string Description { get; set; }
+    public string? UserId { get; set; }
     public int ParticipantNumber { get; set; }
     public DateTime Date { get; set; }
     public IFormFile Image { get; set; }

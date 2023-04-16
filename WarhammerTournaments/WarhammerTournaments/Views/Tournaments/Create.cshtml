@@ -2,6 +2,7 @@
 @model WarhammerTournaments.ViewModels.TournamentViewModel
 
 <form method="post" asp-action="Create" enctype="multipart/form-data">
+    <input type="hidden" id="UserId" name="UserId" asp-for="UserId"/>
     <div class="form-group">
         <label asp-for="Title">Название турнира</label>
         <input asp-for="Title" class="form-control" placeholder="Title">

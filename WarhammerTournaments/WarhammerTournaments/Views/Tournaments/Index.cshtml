@@ -1,3 +1,4 @@
+@using WarhammerTournaments.Data
 @model IEnumerable<Tournament>
 
 <div class="container py-3">
@@ -18,14 +19,20 @@
                            class="btn btn-sm btn-outline-secondary">
                             Детали
                         </a>
-                        <a type="btn btn-success" asp-controller="Tournaments" asp-action="Edit" asp-route-id="@item.Id"
-                           class="btn btn-sm btn-outline-secondary">
-                            Редактировать
-                        </a>
-                        <a type="btn btn-success" asp-controller="Tournaments" asp-action="Delete" asp-route-id="@item.Id"
-                           class="btn btn-sm btn-outline-secondary">
-                            Удалить
-                        </a>
+                        @if (User.Identity.IsAuthenticated && User.IsInRole(UserRoles.Admin))
+                        {
+                            <a type="btn btn-success" asp-controller="Tournaments" asp-action="Edit" asp-route-id="@item.Id"
+                               class="btn btn-sm btn-outline-secondary">
+                                Редактировать
+                            </a>
+                            <a type="btn btn-success" asp-controller="Tournaments" asp-action="Delete" asp-route-id="@item.Id"
+                               class="btn btn-sm btn-outline-secondary">
+                                Удалить
+                            </a>
+                        }
+                        else
+                        {
+                        }
                     </div>
                 </div>
             }
