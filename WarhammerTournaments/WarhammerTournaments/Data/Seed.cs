@@ -22,7 +22,9 @@ public static class Seed
                     Description = "Приглашаю вас принять участие в новом турнире новичковой лиги!",
                     ImageName =
                         "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Operation_Sci-Fi_Con_2015.jpg/1920px-Operation_Sci-Fi_Con_2015.jpg",
-                    ParticipantNumber = 50,
+                    Address = "Улица Пушкина Дом Калатушкино",
+                    AvailableParticipant = 50,
+                    RegisteredParticipant = 10,
                     EntranceFee = 100,
                     Date = DateTime.Now.AddDays(2)
                 },
@@ -31,8 +33,10 @@ public static class Seed
                     Title = "Турнир профессионалов",
                     ImageName =
                         "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Operation_Sci-Fi_Con_2015.jpg/1920px-Operation_Sci-Fi_Con_2015.jpg",
+                    Address = "Улица Пушкина Дом Калатушкино",
                     Description = "ТОП 100 ладера вход",
-                    ParticipantNumber = 10,
+                    AvailableParticipant = 10,
+                    RegisteredParticipant = 2,
                     EntranceFee = 1000,
                     Date = DateTime.Now.AddDays(6)
                 },
@@ -41,8 +45,10 @@ public static class Seed
                     Title = "Средний турнир",
                     ImageName =
                         "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Operation_Sci-Fi_Con_2015.jpg/1920px-Operation_Sci-Fi_Con_2015.jpg",
+                    Address = "Улица Пушкина Дом Калатушкино",
                     Description = "ТОП 500 ладера вход",
-                    ParticipantNumber = 20,
+                    AvailableParticipant = 20,
+                    RegisteredParticipant = 0,
                     EntranceFee = 500,
                     Date = DateTime.Now.AddDays(10)
                 }

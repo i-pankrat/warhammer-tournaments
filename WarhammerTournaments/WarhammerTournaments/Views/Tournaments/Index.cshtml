@@ -1,41 +1,69 @@
 @using WarhammerTournaments.Data
 @model IEnumerable<Tournament>
 
-<div class="container py-3">
-    <div class="card">
-        <div class="row">
-            <a asp-controller="Tournaments" asp-action="Create" class="w-100 btn btn-lg btn-primary" type="submit" width="25%">Создать</a>
-            @foreach (var item in Model)
-            {
-                <div class="col-md-4 mt-3">
-                    <img src="https://placeholdit.imgix.net/~text?txtsize=38&txt=400%C3%97400&w=400&h=400" class="w-100">
-                </div>
-                <div class="col-md-8 px-3 mt-3">
-                    <div class="card-block px-3">
-                        <h4 class="card-title">@item.Title</h4>
-                        <p class="card-text">@item.Description</p>
-                        <p class="card-text">@item.Date.ToString("g")</p>
-                        <a type="btn btn-success" asp-controller="Details" asp-action="Index" asp-route-id="@item.Id"
-                           class="btn btn-sm btn-outline-secondary">
-                            Детали
-                        </a>
-                        @if (User.Identity.IsAuthenticated && User.IsInRole(UserRoles.Admin))
-                        {
-                            <a type="btn btn-success" asp-controller="Tournaments" asp-action="Edit" asp-route-id="@item.Id"
-                               class="btn btn-sm btn-outline-secondary">
-                                Редактировать
-                            </a>
-                            <a type="btn btn-success" asp-controller="Tournaments" asp-action="Delete" asp-route-id="@item.Id"
-                               class="btn btn-sm btn-outline-secondary">
-                                Удалить
-                            </a>
-                        }
-                        else
-                        {
-                        }
+
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+        @foreach (var tournament in Model)
+        {
+            <div class="col">
+                <div class="card mb-4 p-1 mb-xl-0 bg-full-black text-white rounded-2">
+                    <a asp-area="" asp-controller="Home" asp-action="Index">
+                        <img src="@tournament.ImageName" alt="tournament" class="img-fluid w-100 rounded-top-3">
+                    </a>
+                    <div class="card-body">
+                        <h3 class="mb-4">
+                            @tournament.Title
+                        </h3>
+                        <div class="mb-3 text-muted">
+                            <div class="mb-3 lh-1">
+                                <i class="bi bi-house"></i>
+                                <span>@tournament.Address</span>
+                            </div>
+                            <div class="mb-3 lh-1">
+                                <i class="bi bi-calendar-check"></i>
+                                <span>@tournament.Date.ToString("g")</span>
+                            </div>
+                            <div class="lh-1">
+                                <i class="bi bi-person"></i>
+                                <span>@tournament.RegisteredParticipant/@tournament.AvailableParticipant</span>
+                            </div>
+                        </div>
+                        <div class="row ms-auto">
+                            <a asp-area="" asp-controller="" asp-action="" class="btn purple-btn-custom ms-auto">Присоединиться</a>
+                        </div>
                     </div>
                 </div>
-            }
-        </div>
+            </div>
+        }
     </div>
 </div>
+
+
+@*<div class="col">
+    <div class="card mb-4 mb-xl-0 card-hover border">
+        <a href="#!">
+            <img src="https://placehold.co/600x400" alt="tournament" class="img-fluid w-100 rounded-top-3">
+        </a>
+        <div class="card-body">
+            <h3 class="mb-4 text-truncate">
+                <a href="#!" class="text-inherit">Education Edition Deployment And Set Up</a>
+            </h3>
+            <div class="mb-4">
+                <div class="mb-3 lh-1">
+                    <span class="me-1">
+                        <i class="bi bi-calendar-check"></i>
+                    </span>
+                    <span>Thu, November 10, 2023</span>
+                </div>
+                <div class="lh-1">
+                    <span class="me-1">
+                        <i class="bi bi-clock"></i>
+                    </span>
+                    <span>6:00 PM – 8:00 PM GMT</span>
+                </div>
+            </div>
+            <a type="btn btn-success" asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-outline-success text-white login-btn-bg mt-3" value="Присоединиться"></a>
+        </div>
+    </div>
+</div>*@

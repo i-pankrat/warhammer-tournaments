@@ -44,6 +44,10 @@ body {
     border: 1px solid #ffffff;
 }
 
+.bg-full-black {
+    background-color: #000000;
+}
+
 /* Register and login */
 
 .form-control-grey-ng {

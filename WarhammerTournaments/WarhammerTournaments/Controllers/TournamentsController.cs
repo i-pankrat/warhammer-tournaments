@@ -46,8 +46,8 @@ public class TournamentsController : Controller
             {
                 Title = tournamentViewModel.Title,
                 Description = tournamentViewModel.Description,
-                ParticipantNumber = tournamentViewModel.ParticipantNumber,
-                UserId = tournamentViewModel.UserId,
+                AvailableParticipant = tournamentViewModel.ParticipantNumber,
+                OwnerId = tournamentViewModel.UserId,
                 Date = tournamentViewModel.Date,
                 ImageName = fileName,
                 EntranceFee = tournamentViewModel.EntranceFee
@@ -73,7 +73,7 @@ public class TournamentsController : Controller
             Id = tournament.Id,
             Title = tournament.Title,
             Description = tournament.Description,
-            ParticipantNumber = tournament.ParticipantNumber,
+            ParticipantNumber = tournament.AvailableParticipant,
             Date = tournament.Date,
             Image = null,
             EntranceFee = tournament.EntranceFee
@@ -102,7 +102,7 @@ public class TournamentsController : Controller
                 Id = id,
                 Title = tournamentViewModel.Title,
                 Description = tournamentViewModel.Description,
-                ParticipantNumber = tournamentViewModel.ParticipantNumber,
+                AvailableParticipant = tournamentViewModel.ParticipantNumber,
                 Date = tournamentViewModel.Date,
                 ImageName = fileName,
                 EntranceFee = tournamentViewModel.EntranceFee
