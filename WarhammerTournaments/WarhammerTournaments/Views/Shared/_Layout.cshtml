@@ -14,59 +14,59 @@
     <link rel="stylesheet" href="~/WarhammerTournaments.styles.css" asp-append-version="true"/>
 </head>
 <body>
-    <header>
-        @* Why sticky-top does not work well (sticky-top)?*@
-        <nav class="navbar sticky-top navbar-expand-sm navbar-toggleable-sm navbar-dark navbar-custom mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img class="d-inline-block align-text-top" src="favicon.ico" alt="" width="30" height="24"/>
-                    WT
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Tournaments" asp-action="Index">Tournaments</a>
-                        </li>
+<header>
+    @* Why sticky-top does not work well (sticky-top)?*@
+    <nav class="navbar sticky-top navbar-expand-sm navbar-toggleable-sm navbar-dark navbar-custom mb-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                <img class="d-inline-block align-text-top" src="favicon.ico" alt="" width="30" height="24"/>
+                WT
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-area="" asp-controller="Tournaments" asp-action="Index">Tournaments</a>
+                    </li>
 
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
-                            </li>
-                        }
-                    </ul>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Logout">Log out</a>
-                            </li>
-                        </ul>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+                        </li>
                     }
+                </ul>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Logout">Log out</a>
+                        </li>
+                    </ul>
+                }
 
-                    @if (!User.Identity.IsAuthenticated)
-                    {
-                        <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Login">Log in</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Register">Sign up</a>
-                            </li>
-                        </ul>
-                    }
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Login">Log in</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Register">Sign up</a>
+                        </li>
+                    </ul>
+                }
 
-                </div>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
+</header>
 
 <div class="container">
     <main role="main" class="pb-3">
