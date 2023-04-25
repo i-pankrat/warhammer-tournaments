@@ -8,7 +8,7 @@
         {
             <div class="col">
                 <div class="card mb-4 p-1 mb-xl-0 bg-full-black text-white rounded-2">
-                    <a asp-area="" asp-controller="Home" asp-action="Index">
+                    <a asp-area="" asp-controller="Tournaments" asp-action="Details" asp-route-id="@tournament.Id">
                         <img src="@tournament.ImageName" alt="tournament" class="img-fluid w-100 rounded-top-3">
                     </a>
                     <div class="card-body">
