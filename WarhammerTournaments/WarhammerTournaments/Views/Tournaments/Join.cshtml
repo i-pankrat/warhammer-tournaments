@@ -1,0 +1,49 @@
+@model JoinViewModel
+
+
+<div class="container-fluid bg-full-black">
+    <div class="row d-flex justify-content-center bg-transparent pt-5 pb-3 px-5">
+        <div class="row">
+            <div class="col">
+                <h1 class="text-white mb-5 text-center">Присоединиться</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col p-3">
+                <form method="post" asp-action="Create" enctype="multipart/form-data">
+                    <input type="hidden" id="UserId" name="UserId" asp-for="UserId"/>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Fraction" class="form-label text-white">Фракция</label>
+                                <input asp-for="Fraction" class="form-control text-white" placeholder="Введите свою фракцию">
+                                <span asp-validation-for="Fraction" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <div class="form-group mb-3">
+                                        <label asp-for="Roster" class="form-label text-white">Ростер</label>
+                                        <textarea asp-for="Roster" class="form-control text-white" placeholder="Введите свой ростер" ></textarea>
+                                        <span asp-validation-for="Roster" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row d-flex justify-content-center">
+                                <div class="col col-sm-6 col-md-4 col-lg-3 col-xl-2 d-flex justify-content-center">
+                                    <button type="submit" class="btn purple-btn-custom">Присоединиться</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
