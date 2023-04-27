@@ -1,65 +1,97 @@
 @model Tournament
 
-<!-- Page Content -->
-<div class="container">
-
-    <!-- Portfolio Item Heading -->
-    <h1 class="my-4">
-        Page Heading
-        <small>Secondary Text</small>
-    </h1>
-
-    <!-- Portfolio Item Row -->
-    <div class="row">
-
-        <div class="col-md-8">
-            <img class="img-fluid" src="@Model.ImageName" alt="">
+<div class="container-fluid bg-full-black rounded-3">
+    <div class="row d-flex justify-content-center bg-transparent pt-5 pb-3 px-5">
+        <div class="col">
+            <div class="row">
+                <div class="col">
+                    <h1 class="text-white mb-5 text-center">@Model.Title</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="mb-3 text-grey">
+                        <div class="mb-3 lh-1">
+                            <span>Организатор: @Model.OwnerId</span>
+                        </div>
+                        <div class="mb-3 lh-1">
+                            <i class="bi bi-house"></i>
+                            <span>@Model.Address</span>
+                        </div>
+                        <div class="mb-3 lh-1">
+                            <i class="bi bi-calendar-check"></i>
+                            <span>@Model.Date.ToString("g")</span>
+                        </div>
+                        <div class="lh-1">
+                            <i class="bi bi-person"></i>
+                            <span>@Model.RegisteredParticipant/@Model.AvailableParticipant</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="row mb-3">
+                        <img src="@Model.ImageName" alt="tournament" class="img-fluid w-100">
+                    </div>
+                    <div class="flex-row float-end">
+                        <a asp-area="" asp-controller="" asp-action="" class="btn purple-btn-custom ms-auto">Присоединиться</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <h2 class="text-white mb-3">Описание</h2>
+                <div class="mb-3 lh-1 text-grey">
+                    <span>@Model.Description</span>
+                </div>
+            </div>
         </div>
-
-        <div class="col-md-4">
-            <h3 class="my-3">@Model.Title</h3>
-            <p>@Model.Description</p>
-            <h3 class="my-3">@Model.Address</h3>
-            <ul>
-                <li>@Model.EntranceFee</li>
-                <li>@Model.AvailableParticipant</li>
-            </ul>
-        </div>
-
     </div>
-    <!-- /.row -->
-
-    <!-- Related Projects Row -->
-    <h3 class="my-4">More information</h3>
-
-    <div class="row">
-
-        <div class="col-md-3 col-sm-6 mb-4">
-            <a href="#">
-                <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">
-            </a>
+    <div class="row d-flex justify-content-center bg-transparent py-3 px-5">
+        <div class="col text-white">
+            <h2>Участники</h2>
+            <div class="container table-responsive py-5">
+                <table class="table table-bordered table-hover text-white">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Игрок</th>
+                        <th scope="col">HIN</th>
+                        <th scope="col">ELO</th>
+                        <th scope="col">Фракция</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">tuzz</th>
+                        <td>581</td>
+                        <td>1978</td>
+                        <td>Leagues of Votann</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">dyagen</th>
+                        <td>73</td>
+                        <td>1918</td>
+                        <td>Craftworlds</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Romanius98</th>
+                        <td>15</td>
+                        <td>1798</td>
+                        <td>T'au Empire</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Enigma</th>
+                        <td>26</td>
+                        <td>1757</td>
+                        <td>Adeptus Mechanicus</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">LikeAsGod</th>
+                        <td>188</td>
+                        <td>1710</td>
+                        <td>Leagues of Votann</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-
-        <div class="col-md-3 col-sm-6 mb-4">
-            <a href="#">
-                <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">
-            </a>
-        </div>
-
-        <div class="col-md-3 col-sm-6 mb-4">
-            <a href="#">
-                <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">
-            </a>
-        </div>
-
-        <div class="col-md-3 col-sm-6 mb-4">
-            <a href="#">
-                <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">
-            </a>
-        </div>
-
     </div>
-    <!-- /.row -->
-
 </div>
-<!-- /.container -->

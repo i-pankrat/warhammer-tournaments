@@ -26,6 +26,9 @@ body {
 
 /* Templates */
 
+.text-grey {
+    color: #d1d1d1;
+}
 .min-vh-80 {
     height: 80vh;
 }
