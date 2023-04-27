@@ -36,7 +36,7 @@ public class TournamentsController : Controller
         var curUserId = _httpContextAccessor.HttpContext.User.GetUserId();
         var tournamentViewModel = new TournamentViewModel
         {
-            UserId = curUserId
+            OwnerId = curUserId
         };
         return View(tournamentViewModel);
     }
@@ -49,20 +49,23 @@ public class TournamentsController : Controller
             var fileName = await _imageUploadService.Upload(tournamentViewModel.Image);
             var tournament = new Tournament
             {
+                OwnerId = tournamentViewModel.OwnerId,
                 Title = tournamentViewModel.Title,
                 Description = tournamentViewModel.Description,
-                AvailableParticipant = tournamentViewModel.ParticipantNumber,
-                OwnerId = tournamentViewModel.UserId,
+                AvailableParticipant = tournamentViewModel.AvailableParticipant,
+                RegisteredParticipant = 0,
+                Users = new List<User>(),
+                Address = tournamentViewModel.Address,
                 Date = tournamentViewModel.Date,
                 ImageName = fileName,
-                EntranceFee = tournamentViewModel.EntranceFee
+                EntranceFee = tournamentViewModel.EntranceFee,
             };
 
             _tournamentRepository.Add(tournament);
             return RedirectToAction("Index");
         }
 
-        ModelState.AddModelError("", "Photo upload failed");
+        ModelState.AddModelError("", "Failed to add new tournament");
         return View(tournamentViewModel);
     }
 
@@ -73,12 +76,14 @@ public class TournamentsController : Controller
         if (tournament == null)
             return View("Error");
 
-        var tournamentVM = new EditTournamentViewModel()
+        var tournamentVM = new TournamentViewModel
         {
             Id = tournament.Id,
             Title = tournament.Title,
             Description = tournament.Description,
-            ParticipantNumber = tournament.AvailableParticipant,
+            OwnerId = tournament.OwnerId,
+            Address = tournament.Address,
+            AvailableParticipant = tournament.AvailableParticipant,
             Date = tournament.Date,
             Image = null,
             EntranceFee = tournament.EntranceFee
@@ -89,7 +94,7 @@ public class TournamentsController : Controller
 
 
     [HttpPost]
-    public async Task<IActionResult> Edit(int id, EditTournamentViewModel tournamentViewModel)
+    public async Task<IActionResult> Edit(int id, TournamentViewModel tournamentViewModel)
     {
         if (!ModelState.IsValid)
         {

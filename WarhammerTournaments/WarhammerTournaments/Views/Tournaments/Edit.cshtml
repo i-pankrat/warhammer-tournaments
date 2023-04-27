@@ -1,36 +1,94 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@model WarhammerTournaments.ViewModels.EditTournamentViewModel
+@model WarhammerTournaments.ViewModels.TournamentViewModel
 
-<form method="post" asp-action="Create" enctype="multipart/form-data">
-    <div class="form-group">
-        <label asp-for="Title">Название турнира</label>
-        <input asp-for="Title" class="form-control" placeholder="Title">
-        <span asp-validation-for="Title" class="text-danger"></span>
+
+<div class="container-fluid bg-full-black">
+    <div class="row d-flex justify-content-center bg-transparent pt-5 pb-3 px-5">
+        <div class="row">
+            <div class="col">
+                <h1 class="text-white mb-5 text-center">Новый турнир</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col p-3">
+                <form method="post" asp-action="Edit" enctype="multipart/form-data">
+                    <input type="hidden" id="OwnerId" name="OwnerId" asp-for="OwnerId"/>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Title" class="form-label text-white">Название турнира</label>
+                                <input asp-for="Title" class="form-control text-white" placeholder="Title">
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Date" class="form-label text-white">Дата проведения</label>
+                                <input asp-for="Date" class="form-control text-white" placeholder="Street">
+                                <span asp-validation-for="Date" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="AvailableParticipant" class="form-label text-white">Число участников</label>
+                                <input asp-for="AvailableParticipant" class="form-control text-white" placeholder="City">
+                                <span asp-validation-for="AvailableParticipant" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="EntranceFee" class="form-label text-white">Входной взнос</label>
+                                <input asp-for="EntranceFee" class="form-control text-white" placeholder="State">
+                                <span asp-validation-for="EntranceFee" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col">
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <div class="form-group mb-3">
+                                        <label asp-for="Address" class="form-label text-white">Адрес</label>
+                                        <input asp-for="Address" class="form-control text-white" placeholder="Введите адрес">
+                                        <span asp-validation-for="Address" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label asp-for="Description" class="form-label text-white">Описание</label>
+                                        <textarea asp-for="Description" class="form-control text-white" placeholder="Введите описание" ></textarea>
+                                        <span asp-validation-for="Description" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label asp-for="Description" class="form-label text-white">Правила</label>
+                                        <textarea asp-for="Description" class="form-control text-white" placeholder="Введите правила турнира"></textarea>
+                                        <span asp-validation-for="Description" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col col-md-6 col-lg-3 col-xl-3">
+                                    <div class="form-group">
+                                        <label asp-for="Image" class="form-label text-white">Аватарка</label>
+                                        <input asp-for="Image" type="file" accept="image/*" class="form-control text-white" placeholder="Image">
+                                        <span asp-validation-for="Image" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row d-flex justify-content-center">
+                                <div class="col col-sm-6 col-md-4 col-lg-3 col-xl-2 d-flex justify-content-center">
+                                    <button type="submit" class="btn purple-btn-custom">Сохранить</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="Description">Описание</label>
-        <input asp-for="Description" class="form-control" placeholder="Description">
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Date">Дата</label>
-        <input asp-for="Date" class="form-control" placeholder="Street">
-        <span asp-validation-for="Date" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ParticipantNumber">Число участников</label>
-        <input asp-for="ParticipantNumber" class="form-control" placeholder="City">
-        <span asp-validation-for="ParticipantNumber" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="EntranceFee">Входной взнос</label>
-        <input asp-for="EntranceFee" class="form-control" placeholder="State">
-        <span asp-validation-for="EntranceFee" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Image">Аватарка</label>
-        <input asp-for="Image" type="file" accept="image/*" class="form-control" placeholder="Image">
-        <span asp-validation-for="Image" class="text-danger"></span>
-    </div>
-    <button type="submit" class="btn btn-primary" asp-route-id="@Model.Id">Подтвердить</button>
-</form>
+</div>

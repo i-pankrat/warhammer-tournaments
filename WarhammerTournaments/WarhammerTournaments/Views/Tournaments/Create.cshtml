@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col p-3">
                 <form method="post" asp-action="Create" enctype="multipart/form-data">
-                    <input type="hidden" id="UserId" name="UserId" asp-for="UserId"/>
+                    <input type="hidden" id="OwnerId" name="OwnerId" asp-for="OwnerId"/>
 
                     <div class="row mb-3">
                         <div class="col-md-6">
@@ -34,9 +34,9 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label asp-for="ParticipantNumber" class="form-label text-white">Число участников</label>
-                                <input asp-for="ParticipantNumber" class="form-control text-white" placeholder="City">
-                                <span asp-validation-for="ParticipantNumber" class="text-danger"></span>
+                                <label asp-for="AvailableParticipant" class="form-label text-white">Число участников</label>
+                                <input asp-for="AvailableParticipant" class="form-control text-white" placeholder="City">
+                                <span asp-validation-for="AvailableParticipant" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -53,13 +53,18 @@
                             <div class="row mb-3">
                                 <div class="col">
                                     <div class="form-group mb-3">
+                                        <label asp-for="Address" class="form-label text-white">Адрес</label>
+                                        <input asp-for="Address" class="form-control text-white" placeholder="Введите адрес">
+                                        <span asp-validation-for="Address" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group mb-3">
                                         <label asp-for="Description" class="form-label text-white">Описание</label>
-                                        <textarea asp-for="Description" class="form-control text-white" placeholder="Description" ></textarea>
+                                        <textarea asp-for="Description" class="form-control text-white" placeholder="Введите описание" ></textarea>
                                         <span asp-validation-for="Description" class="text-danger"></span>
                                     </div>
                                     <div class="form-group mb-3">
                                         <label asp-for="Description" class="form-label text-white">Правила</label>
-                                        <textarea asp-for="Description" class="form-control text-white" placeholder="Description"></textarea>
+                                        <textarea asp-for="Description" class="form-control text-white" placeholder="Введите правила турнира"></textarea>
                                         <span asp-validation-for="Description" class="text-danger"></span>
                                     </div>
                                 </div>
