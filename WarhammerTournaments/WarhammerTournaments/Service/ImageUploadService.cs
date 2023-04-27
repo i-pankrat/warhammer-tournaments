@@ -11,7 +11,7 @@ public class ImageUploadService : IImageUploadService
         _hostEnvironment = hostEnvironment;
     }
 
-    public async Task<string> Upload(IFormFile image)
+    public async Task<string> Upload(IFormFile? image)
     {
         var wwwRootPath = _hostEnvironment.WebRootPath;
         var fileName = Path.GetFileNameWithoutExtension(image.FileName);
