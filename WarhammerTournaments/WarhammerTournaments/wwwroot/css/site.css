@@ -24,6 +24,16 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
+/* Override bootsrtap */
+
+.form-control:valid {
+    background-color: #393939 !important;
+}
+
+.form-control:invalid {
+    background-color: #545454 !important;
+}
+
 /* Templates */
 
 .text-grey {
@@ -49,12 +59,6 @@ body {
 
 .bg-full-black {
     background-color: #000000;
-}
-
-/* Register and login */
-
-.form-control-grey-ng {
-    background-color: #393939;
 }
 
 /* Navigation bar */
