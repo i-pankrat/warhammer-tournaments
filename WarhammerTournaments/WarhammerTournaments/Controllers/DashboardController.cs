@@ -17,10 +17,10 @@ public class DashboardController : Controller
     public async Task<IActionResult> Index()
     {
         var userTournaments = await _dashboardRepository.GetAllUserTournaments();
-        var dashboardViewModel = new DashboardViewModel
+        /*var dashboardViewModel = new DashboardViewModel
         {
             Tournaments = userTournaments
-        };
-        return View(dashboardViewModel);
+        };*/
+        return View(userTournaments);
     }
 }

@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using WarhammerTournaments.Data;
 using WarhammerTournaments.Interfaces;
 using WarhammerTournaments.Models;
@@ -18,7 +19,7 @@ public class DashboardRepository : IDashboardRepository
     public async Task<List<Tournament>> GetAllUserTournaments()
     {
         var curUserId = _httpContextAccessor.HttpContext?.User.GetUserId();
-        var userTournaments = _context.Tournaments.Where(t => t.UserId == curUserId);
-        return userTournaments.ToList();
+        var userTournaments = _context.Tournaments.Where(t => t.OwnerId == curUserId);
+        return await userTournaments.ToListAsync();
     }
 }

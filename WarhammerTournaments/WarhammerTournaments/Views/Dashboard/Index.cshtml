@@ -1,39 +1,149 @@
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@model WarhammerTournaments.ViewModels.DashboardViewModel
+@model IEnumerable<Tournament>
 
-
-<h1 class="display-4 fw-normal">User Dashboard</h1>
-<a type="button" class="btn btn-primary" asp-area="" asp-controller="Tournaments" asp-action="Create">Создать турнир</a>
-@*<a type="button" class="btn btn-primary" asp-area="" asp-controller="Dashboard" asp-action="EditUserProfile">Редактировать профиль</a>*@
-<div class="album py-5 bg-light">
-    <div class="container">
-        <h2 class="display-4 fw-normal">Ваши турниры</h2>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-
-            @foreach (var item in Model.Tournaments)
-            {
-                <div class="col-md-4">
-                    <div class="card mb-4 box-shadow">
-                        <img class="card-img-top" src="@item.ImageName" width="100%" height="225" alt="Card image cap">
+<div class="container-fluid bg-full-black rounded-3 pb-5">
+    <div class="row d-flex justify-content-center bg-transparent pt-5 pb-3 px-5">
+        <div class="col">
+            <div class="row">
+                <div class="col">
+                    <h1 class="text-white mb-5">Мои турниры</h1>
+                </div>
+                <div class="col">
+                    <a asp-area="" asp-controller="Tournaments" asp-action="Create" class="btn d-flex purple-btn-custom float-end">
+                        <span class=" pe-2">
+                            <i class="bi bi-plus"></i>
+                        </span>
+                        <span>Create</span>
+                    </a>
+                </div>
+            </div>
+            @*<div class="row g-6 mb-5">
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card shadow border-0">
                         <div class="card-body">
-                            <p class="card-text">@item.Title</p>
-                            <p class="card-text">@item.Description</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a type="btn btn-success" asp-controller="Details" asp-action="Index" asp-route-id="@item.Id"
-                                   class="btn btn-sm btn-outline-secondary">View</a>
-                                    @if (User.Identity.IsAuthenticated)
-                                    {
-                                        <a asp-controller="Tournaments" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
-                                        <a asp-controller="Tournaments" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Delete</a>
-                                    }
+                            <div class="row">
+                                <div class="col">
+                                    <span class="h6 text-muted text-sm d-block mb-2">Турниров проведено</span>
+                                    <span class="h3 mb-0">100</span>
                                 </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
+                                        <i class="bi bi-alarm"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-2 mb-0 text-sm">
+                                <span class="badge badge-pill bg-soft-success text-success me-2">1</span>
+                                <span class="text-nowrap text-xs text-muted">За последний месяц</span>
                             </div>
                         </div>
                     </div>
                 </div>
-            }
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card shadow border-0">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <span class="h6 text-muted text-sm d-block mb-2">Участников</span>
+                                    <span class="h3 mb-0">215</span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape bg-primary text-white text-lg rounded-circle">
+                                        <i class="bi bi-people"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-2 mb-0 text-sm">
+                                <span class="badge badge-pill bg-soft-success text-success me-2">30</span>
+                                <span class="text-nowrap text-xs text-muted">За последний месяц</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card shadow border-0">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <span class="h6 font-semibold text-muted text-sm d-block mb-2">Призовых</span>
+                                    <span class="h3 font-bold mb-0">1.400</span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape bg-info text-white text-lg rounded-circle">
+                                        <i class="bi bi-clock-history"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-2 mb-0 text-sm">
+                                <span class="badge badge-pill bg-soft-danger text-danger me-2">
+                                    <i class="bi bi-arrow-down me-1"></i>1000
+                                </span>
+                                <span class="text-nowrap text-xs text-muted">Since last month</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card shadow border-0">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <span class="h6 font-semibold text-muted text-sm d-block mb-2">Work load</span>
+                                    <span class="h3 font-bold mb-0">95%</span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape bg-warning text-white text-lg rounded-circle">
+                                        <i class="bi bi-minecart-loaded"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-2 mb-0 text-sm">
+                                <span class="badge badge-pill bg-soft-success text-success me-2">
+                                    <i class="bi bi-arrow-up me-1"></i>10%
+                                </span>
+                                <span class="text-nowrap text-xs text-muted">Since last month</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+                @foreach (var tournament in Model)
+                {
+                    <div class="col">
+                        <div class="card mb-4 p-1 mb-xl-0 tournament-card-bg text-white rounded-2">
+                            <a asp-area="" asp-controller="Tournaments" asp-action="Details" asp-route-id="@tournament.Id">
+                                <img src="https://placehold.co/600x400" alt="tournament" class="img-fluid w-100 rounded-top-3">
+                            </a>
+                            <div class="card-body">
+                                <h3 class="mb-4">
+                                    @tournament.Title
+                                </h3>
+                                <div class="mb-3 text-muted">
+                                    <div class="mb-3 lh-1">
+                                        <i class="bi bi-house"></i>
+                                        <span>@tournament.Address</span>
+                                    </div>
+                                    <div class="mb-3 lh-1">
+                                        <i class="bi bi-calendar-check"></i>
+                                        <span>@tournament.Date.ToString("g")</span>
+                                    </div>
+                                    <div class="lh-1">
+                                        <i class="bi bi-person"></i>
+                                        <span>@tournament.RegisteredParticipant/@tournament.AvailableParticipant</span>
+                                    </div>
+                                </div>
+                                <div class="row ms-auto">
+                                    <a asp-area="" asp-controller="Tournaments" asp-action="Applications" asp-route-id="@tournament.Id" class="btn purple-btn-custom mb-3 ms-auto">Заявки</a>
+                                    <a asp-area="" asp-controller="Tournaments" asp-action="Edit" asp-route-id="@tournament.Id" class="btn purple-btn-custom mb-3 ms-auto">Редактировать</a>
+                                    <a asp-area="" asp-controller="Tournaments" asp-action="Delete" asp-route-id="@tournament.Id" class="btn black-btn-custom ms-auto">Удалить</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
     </div>
 </div>

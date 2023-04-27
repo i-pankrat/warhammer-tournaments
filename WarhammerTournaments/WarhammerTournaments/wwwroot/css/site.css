@@ -37,7 +37,19 @@ body {
 /* Templates */
 
 .text-grey {
-    color: #d1d1d1;
+    color: #d1d1d1 !important;
+}
+
+.text-blue {
+    color: #0066ff !important;
+}
+
+.text-green {
+    color: #00ff47 !important;
+}
+
+.text-yellow {
+    color: #faff00 !important;
 }
 .min-vh-80 {
     height: 80vh;
@@ -59,6 +71,10 @@ body {
 
 .bg-full-black {
     background-color: #000000;
+}
+
+.tournament-card-bg{
+    background-color: #333634;
 }
 
 /* Navigation bar */
