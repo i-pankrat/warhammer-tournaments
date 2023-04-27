@@ -28,12 +28,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Migrations\" />
-        <Folder Include="wwwroot\images\" />
+        <_ContentIncludedByDefault Remove="wwwroot\css\site.css" />
     </ItemGroup>
 
     <ItemGroup>
-        <_ContentIncludedByDefault Remove="wwwroot\css\site.css" />
+      <Folder Include="images\" />
+      <Folder Include="wwwroot\images\" />
     </ItemGroup>
 
 </Project>
