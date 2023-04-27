@@ -11,4 +11,9 @@ public interface ITournamentRepository
     public bool Update(Tournament tournament);
     public bool Delete(Tournament tournament);
     public bool Save();
+    public Task<IEnumerable<Application>> GetApplicationsByTournamentIdAsync(int id);
+    public bool AddApplication(Application application);
+    public bool DeleteApplication(Application application);
+    public Task<bool> DeleteAllApplicationsByTournamentIdAsync(int id);
+    public Task<User> GetUserByIdAsync(string id);
 }

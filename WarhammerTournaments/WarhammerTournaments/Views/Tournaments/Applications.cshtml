@@ -1,0 +1,59 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model WarhammerTournaments.ViewModels.ApplicationViewModel
+
+<div class="container-fluid bg-full-black rounded-3 pb-5">
+    <div class="row d-flex justify-content-center bg-transparent pt-5 pb-3 px-5">
+        <div class="col">
+            <div class="row">
+                <div class="col">
+                    <h1 class="text-white mb-5">Заявки</h1>
+                </div>
+                <div class="col">
+                    <a asp-area="" asp-controller="Tournaments" asp-action="DeleteAllApplications" asp-route-id="@Model.TournamentId" class="btn d-flex purple-btn-custom float-end">
+                        <span class=" pe-2">
+                            <i class="bi bi-dash"></i>
+                        </span>
+                        <span>Удалить всё</span>
+                    </a>
+                </div>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+                @foreach (var application in Model.Applications)
+                {
+                    <div class="col">
+                        <div class="card mb-4 p-1 mb-xl-0 test text-white rounded-2">
+                            <div class="card-body">
+                                <h3 class="mb-4">
+                                    @application.UserName
+                                </h3>
+                                <div class="mb-3 text-white">
+                                    <div class="mb-3 lh-1">
+                                        <i class="bi bi-star-fill"></i>
+                                        <span>@application.Elo</span>
+                                    </div>
+                                    <div class="mb-3 lh-1">
+                                        <i class="bi bi-calendar-check"></i>
+                                        <span>@application.Hin</span>
+                                    </div>
+                                    <div class="lh-1">
+                                        <i class="bi bi-person"></i>
+                                        <span>Что то ещё</span>
+                                    </div>
+                                </div>
+                                <div class="row ms-auto">
+                                    <div class="col-6">
+                                        <a asp-area="" asp-controller="Tournaments" asp-action="AcceptApplication" asp-route-id="@application.Id" class="btn purple-btn-custom mb-3 ms-auto">Принять</a>
+
+                                    </div>
+                                    <div class="col-6">
+                                        <a asp-area="" asp-controller="Tournaments" asp-action="RejectApplication" asp-route-id="@application.Id" class="btn black-btn-custom ms-auto">Отклонить</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

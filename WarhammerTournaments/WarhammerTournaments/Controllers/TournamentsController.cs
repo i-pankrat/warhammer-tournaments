@@ -69,6 +69,45 @@ public class TournamentsController : Controller
         return View(tournamentViewModel);
     }
 
+    [HttpGet]
+    public async Task<IActionResult> Join(int id)
+    {
+        var curUserId = _httpContextAccessor.HttpContext.User.GetUserId();
+        var applicationViewModel = new JoinViewModel()
+        {
+            UserId = curUserId,
+            TournamentId = id
+        };
+
+        return View(applicationViewModel);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Join(JoinViewModel joinViewModel)
+    {
+        if (ModelState.IsValid)
+        {
+            var user = await _tournamentRepository.GetUserByIdAsync(joinViewModel.UserId);
+            var application = new Application
+            {
+                TournamentId = joinViewModel.TournamentId,
+                UserId = user.Id,
+                UserName = user.UserName,
+                Elo = 0,
+                Hin = 0,
+                Fraction = joinViewModel.Fraction,
+                Roster = joinViewModel.Roster,
+            };
+
+            _tournamentRepository.AddApplication(application);
+            return RedirectToAction("Index");
+        }
+
+        ModelState.AddModelError("", "Failed to add application");
+        return View(joinViewModel);
+    }
+
+    [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {
         var tournament = await _tournamentRepository.GetByIdAsync(id);
@@ -102,27 +141,40 @@ public class TournamentsController : Controller
             return View("Edit", tournamentViewModel);
         }
 
-        var oldTournament = await _tournamentRepository.GetByIdAsyncNoTracking(id);
+        var oldTournament = await _tournamentRepository.GetByIdAsyncNoTracking(tournamentViewModel.Id);
         if (oldTournament != null)
         {
             _imageUploadService.Delete(oldTournament.ImageName);
             var fileName = await _imageUploadService.Upload(tournamentViewModel.Image);
             var tournament = new Tournament
             {
-                Id = id,
+                Id = tournamentViewModel.Id,
                 Title = tournamentViewModel.Title,
                 Description = tournamentViewModel.Description,
-                AvailableParticipant = tournamentViewModel.ParticipantNumber,
+                OwnerId = tournamentViewModel.OwnerId,
+                Address = tournamentViewModel.Address,
+                AvailableParticipant = tournamentViewModel.AvailableParticipant,
                 Date = tournamentViewModel.Date,
                 ImageName = fileName,
                 EntranceFee = tournamentViewModel.EntranceFee
             };
 
             _tournamentRepository.Update(tournament);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Dashboard");
         }
 
         return View(tournamentViewModel);
+    }
+
+    public async Task<IActionResult> Applications(int id)
+    {
+        var applications = await _tournamentRepository.GetApplicationsByTournamentIdAsync(id);
+        var applicationsVM = new ApplicationViewModel
+        {
+            Applications = applications,
+            TournamentId = id
+        };
+        return View(applicationsVM);
     }
 
     public async Task<IActionResult> Delete(int id)
@@ -133,9 +185,25 @@ public class TournamentsController : Controller
         {
             _imageUploadService.Delete(tournament.ImageName);
             _tournamentRepository.Delete(tournament);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Dashboard");
         }
 
         return View("Error");
+    }
+
+    public async Task<IActionResult> DeleteAllApplications(int id)
+    {
+        await _tournamentRepository.DeleteAllApplicationsByTournamentIdAsync(id);
+        return RedirectToAction("Index", "Dashboard");
+    }
+
+    public async Task<IActionResult> AcceptApplication(int applicationId)
+    {
+        return RedirectToAction("Index", "Dashboard");
+    }
+
+    public async Task<IActionResult> RejectApplication(int applicationId)
+    {
+        return RedirectToAction("Index", "Dashboard");
     }
 }

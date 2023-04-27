@@ -15,22 +15,22 @@
                         <h3 class="mb-4">
                             @tournament.Title
                         </h3>
-                        <div class="mb-3 text-muted">
+                        <div class="mb-3">
                             <div class="mb-3 lh-1">
-                                <i class="bi bi-house"></i>
-                                <span>@tournament.Address</span>
+                                <i class="bi bi-house text-blue"></i>
+                                <span class="text-white">@tournament.Address</span>
                             </div>
                             <div class="mb-3 lh-1">
-                                <i class="bi bi-calendar-check"></i>
-                                <span>@tournament.Date.ToString("g")</span>
+                                <i class="bi bi-calendar-check text-green"></i>
+                                <span class="text-white">@tournament.Date.ToString("g")</span>
                             </div>
                             <div class="lh-1">
-                                <i class="bi bi-person"></i>
-                                <span>@tournament.RegisteredParticipant/@tournament.AvailableParticipant</span>
+                                <i class="bi bi-person text-yellow"></i>
+                                <span class="text-white">@tournament.RegisteredParticipant/@tournament.AvailableParticipant</span>
                             </div>
                         </div>
                         <div class="row ms-auto">
-                            <a asp-area="" asp-controller="" asp-action="" class="btn purple-btn-custom ms-auto">Присоединиться</a>
+                            <a asp-area="" asp-controller="Tournaments" asp-action="Join" asp-route-id="@tournament.Id" class="btn purple-btn-custom ms-auto">Присоединиться</a>
                         </div>
                     </div>
                 </div>
@@ -38,32 +38,3 @@
         }
     </div>
 </div>
-
-
-@*<div class="col">
-    <div class="card mb-4 mb-xl-0 card-hover border">
-        <a href="#!">
-            <img src="https://placehold.co/600x400" alt="tournament" class="img-fluid w-100 rounded-top-3">
-        </a>
-        <div class="card-body">
-            <h3 class="mb-4 text-truncate">
-                <a href="#!" class="text-inherit">Education Edition Deployment And Set Up</a>
-            </h3>
-            <div class="mb-4">
-                <div class="mb-3 lh-1">
-                    <span class="me-1">
-                        <i class="bi bi-calendar-check"></i>
-                    </span>
-                    <span>Thu, November 10, 2023</span>
-                </div>
-                <div class="lh-1">
-                    <span class="me-1">
-                        <i class="bi bi-clock"></i>
-                    </span>
-                    <span>6:00 PM – 8:00 PM GMT</span>
-                </div>
-            </div>
-            <a type="btn btn-success" asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-outline-success text-white login-btn-bg mt-3" value="Присоединиться"></a>
-        </div>
-    </div>
-</div>*@
