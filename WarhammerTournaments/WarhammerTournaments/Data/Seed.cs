@@ -20,7 +20,7 @@ public static class Seed
                 {
                     Title = "Новичковый турнир",
                     Description = "Приглашаю вас принять участие в новом турнире новичковой лиги!",
-                    ImageName =
+                    ImageUrl =
                         "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Operation_Sci-Fi_Con_2015.jpg/1920px-Operation_Sci-Fi_Con_2015.jpg",
                     Address = "Улица Пушкина Дом Калатушкино",
                     AvailableParticipant = 50,
@@ -31,7 +31,7 @@ public static class Seed
                 new()
                 {
                     Title = "Турнир профессионалов",
-                    ImageName =
+                    ImageUrl = 
                         "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Operation_Sci-Fi_Con_2015.jpg/1920px-Operation_Sci-Fi_Con_2015.jpg",
                     Address = "Улица Пушкина Дом Калатушкино",
                     Description = "ТОП 100 ладера вход",
@@ -43,7 +43,7 @@ public static class Seed
                 new()
                 {
                     Title = "Средний турнир",
-                    ImageName =
+                    ImageUrl =
                         "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Operation_Sci-Fi_Con_2015.jpg/1920px-Operation_Sci-Fi_Con_2015.jpg",
                     Address = "Улица Пушкина Дом Калатушкино",
                     Description = "ТОП 500 ладера вход",

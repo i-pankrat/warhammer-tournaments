@@ -14,6 +14,7 @@ public class Tournament
     public List<User> Users { get; set; }
     public string Address { get; set; }
     public DateTime Date { get; set; }
-    public string ImageName { get; set; }
+    public string ImageUrl { get; set; }
+    public string ImageId { get; set; }
     public int EntranceFee { get; set; }
 }

@@ -46,7 +46,7 @@ public class TournamentsController : Controller
     {
         if (ModelState.IsValid)
         {
-            var fileName = await _imageUploadService.Upload(tournamentViewModel.Image);
+            var result = await _imageUploadService.UploadAsync(tournamentViewModel.Image);
             var tournament = new Tournament
             {
                 OwnerId = tournamentViewModel.OwnerId,
@@ -57,7 +57,8 @@ public class TournamentsController : Controller
                 Users = new List<User>(),
                 Address = tournamentViewModel.Address,
                 Date = tournamentViewModel.Date,
-                ImageName = fileName,
+                ImageUrl = result.url,
+                ImageId = result.fileId,
                 EntranceFee = tournamentViewModel.EntranceFee,
             };
 
@@ -144,8 +145,9 @@ public class TournamentsController : Controller
         var oldTournament = await _tournamentRepository.GetByIdAsyncNoTracking(tournamentViewModel.Id);
         if (oldTournament != null)
         {
-            _imageUploadService.Delete(oldTournament.ImageName);
-            var fileName = await _imageUploadService.Upload(tournamentViewModel.Image);
+            var deleteResult = await _imageUploadService.DeleteAsync(oldTournament.ImageId);
+            var uploadResult = await _imageUploadService.UploadAsync(tournamentViewModel.Image);
+            
             var tournament = new Tournament
             {
                 Id = tournamentViewModel.Id,
@@ -155,7 +157,8 @@ public class TournamentsController : Controller
                 Address = tournamentViewModel.Address,
                 AvailableParticipant = tournamentViewModel.AvailableParticipant,
                 Date = tournamentViewModel.Date,
-                ImageName = fileName,
+                ImageUrl = uploadResult.url,
+                ImageId = uploadResult.fileId,
                 EntranceFee = tournamentViewModel.EntranceFee
             };
 
@@ -183,7 +186,7 @@ public class TournamentsController : Controller
 
         if (tournament != null)
         {
-            _imageUploadService.Delete(tournament.ImageName);
+            var deleteResult = await _imageUploadService.DeleteAsync(tournament.ImageId);
             _tournamentRepository.Delete(tournament);
             return RedirectToAction("Index", "Dashboard");
         }

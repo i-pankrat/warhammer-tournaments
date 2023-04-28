@@ -2,6 +2,6 @@ namespace WarhammerTournaments.Interfaces;
 
 public interface IImageUploadService
 {
-    public Task<string> Upload(IFormFile? image);
-    public void Delete(string image);
+    public Task<Result> UploadAsync(IFormFile? image);
+    public Task<ResultDelete> DeleteAsync(string fileId);
 }
