@@ -42,10 +42,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="images\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Compile Remove="System.Memory.4.5.3\**" />
       <Compile Remove="System.Buffers.4.5.0\**" />
       <Compile Remove="System.Numerics.Vectors.4.5.0\**" />

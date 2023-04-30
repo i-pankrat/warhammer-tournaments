@@ -54,7 +54,7 @@ public class TournamentsController : Controller
                 Description = tournamentViewModel.Description,
                 AvailableParticipant = tournamentViewModel.AvailableParticipant,
                 RegisteredParticipant = 0,
-                Users = new List<User>(),
+                Participants = new List<Application>(),
                 Address = tournamentViewModel.Address,
                 Date = tournamentViewModel.Date,
                 ImageUrl = result.url,
@@ -188,7 +188,7 @@ public class TournamentsController : Controller
         {
             var deleteResult = await _imageUploadService.DeleteAsync(tournament.ImageId);
             _tournamentRepository.Delete(tournament);
-            return RedirectToAction("Index", "Dashboard");
+            return RedirectToAction("Applications");
         }
 
         return View("Error");
@@ -200,13 +200,32 @@ public class TournamentsController : Controller
         return RedirectToAction("Index", "Dashboard");
     }
 
-    public async Task<IActionResult> AcceptApplication(int applicationId)
+    public async Task<IActionResult> AcceptApplication(int id)
     {
-        return RedirectToAction("Index", "Dashboard");
+        var application = await _tournamentRepository.GetApplicationsByIdAsync(id);
+        _tournamentRepository.DeleteApplication(application);
+        var tournament = await _tournamentRepository.GetByIdAsync(application.TournamentId);
+        if (tournament != null)
+        {
+            if (tournament.RegisteredParticipant == tournament.AvailableParticipant)
+            {
+                // can not add new patricipant;
+                return View("Error");
+            }
+            tournament.Participants.Add(application);
+            tournament.RegisteredParticipant += 1;
+            _tournamentRepository.Update(tournament);
+            return RedirectToAction("Applications", tournament.Id);
+        }
+
+        return View("Error");
+
     }
 
-    public async Task<IActionResult> RejectApplication(int applicationId)
+    public async Task<IActionResult> RejectApplication(int id)
     {
-        return RedirectToAction("Index", "Dashboard");
+        var application = await _tournamentRepository.GetApplicationsByIdAsync(id);
+        _tournamentRepository.DeleteApplication(application);
+        return RedirectToAction("Applications", application.TournamentId);
     }
 }

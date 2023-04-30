@@ -20,8 +20,8 @@
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
                 @foreach (var application in Model.Applications)
                 {
-                    <div class="col">
-                        <div class="card mb-4 p-1 mb-xl-0 test text-white rounded-2">
+                    <div class="col d-flex">
+                        <div class="card d-flex mb-4 p-1 pt-3 mb-xl-0 tournament-card-bg text-white">
                             <div class="card-body">
                                 <h3 class="mb-4">
                                     @application.UserName
@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="row ms-auto">
                                     <div class="col-6">
-                                        <a asp-area="" asp-controller="Tournaments" asp-action="AcceptApplication" asp-route-id="@application.Id" class="btn purple-btn-custom mb-3 ms-auto">Принять</a>
+                                        <a asp-area="" asp-controller="Tournaments" asp-action="AcceptApplication" asp-route-id="@Model.TournamentId" class="btn purple-btn-custom mb-3 ms-auto">Принять</a>
 
                                     </div>
                                     <div class="col-6">

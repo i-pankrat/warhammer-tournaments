@@ -59,36 +59,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th scope="row">tuzz</th>
-                        <td>581</td>
-                        <td>1978</td>
-                        <td>Leagues of Votann</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">dyagen</th>
-                        <td>73</td>
-                        <td>1918</td>
-                        <td>Craftworlds</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Romanius98</th>
-                        <td>15</td>
-                        <td>1798</td>
-                        <td>T'au Empire</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Enigma</th>
-                        <td>26</td>
-                        <td>1757</td>
-                        <td>Adeptus Mechanicus</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">LikeAsGod</th>
-                        <td>188</td>
-                        <td>1710</td>
-                        <td>Leagues of Votann</td>
-                    </tr>
+                    @foreach (var participant in @Model.Participants)
+                    {
+                        <tr>
+                            <th scope="row">@participant.UserName</th>
+                            <td>TODO</td>
+                            <td>TODO</td>
+                            <td>@participant.Fraction</td>
+                        </tr>
+                    }
                     </tbody>
                 </table>
             </div>

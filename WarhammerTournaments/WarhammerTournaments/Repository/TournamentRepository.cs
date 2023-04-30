@@ -55,6 +55,11 @@ public class TournamentRepository : ITournamentRepository
         return saved > 0;
     }
 
+    public async Task<Application> GetApplicationsByIdAsync(int id)
+    {
+        return await _context.Applications.FirstOrDefaultAsync(x => x.TournamentId == id);
+    }
+    
     public async Task<IEnumerable<Application>> GetApplicationsByTournamentIdAsync(int id)
     {
         return await _context.Applications.Where(x => x.TournamentId == id).ToListAsync();
