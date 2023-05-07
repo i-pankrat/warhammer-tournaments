@@ -14,6 +14,8 @@ public class TournamentRepository : ITournamentRepository
         _context = context;
     }
 
+    // Tournaments
+
     public async Task<IEnumerable<Tournament>> GetAll()
     {
         return await _context.Tournaments.ToListAsync();
@@ -27,6 +29,11 @@ public class TournamentRepository : ITournamentRepository
     public async Task<Tournament> GetByIdAsyncNoTracking(int id)
     {
         return await _context.Tournaments.AsNoTracking().FirstOrDefaultAsync(i => i.Id == id);
+    }
+
+    public async Task<Tournament> GetByIdWithApplicationsAsync(int id)
+    {
+        return await _context.Tournaments.Include("Participants").FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public bool Add(Tournament tournament)
@@ -55,19 +62,37 @@ public class TournamentRepository : ITournamentRepository
         return saved > 0;
     }
 
-    public async Task<Application> GetApplicationsByIdAsync(int id)
+    // Applications
+
+    public async Task<Application> GetApplicationByIdAsync(int id)
     {
-        return await _context.Applications.FirstOrDefaultAsync(x => x.TournamentId == id);
+        return await _context.Applications.FirstOrDefaultAsync(x => x.Id == id);
     }
-    
+
     public async Task<IEnumerable<Application>> GetApplicationsByTournamentIdAsync(int id)
     {
         return await _context.Applications.Where(x => x.TournamentId == id).ToListAsync();
     }
 
+    public async Task<IEnumerable<Application>> GetAcceptedApplicationsByTournamentIdAsync(int id)
+    {
+        return await _context.Applications.Where(x => x.TournamentId == id && x.IsAccepted == true).ToListAsync();
+    }
+
+    public async Task<IEnumerable<Application>> GetNotAcceptedApplicationsByTournamentIdAsync(int id)
+    {
+        return await _context.Applications.Where(x => x.TournamentId == id && x.IsAccepted == false).ToListAsync();
+    }
+
     public bool AddApplication(Application application)
     {
         _context.Add(application);
+        return Save();
+    }
+
+    public bool UpdateApplication(Application application)
+    {
+        _context.Update(application);
         return Save();
     }
 
@@ -83,6 +108,7 @@ public class TournamentRepository : ITournamentRepository
         return Save();
     }
 
+    // User
     public async Task<User> GetUserByIdAsync(string id)
     {
         return await _context.Users.FirstOrDefaultAsync(i => i.Id == id);

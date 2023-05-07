@@ -28,7 +28,11 @@ public class TournamentsController : Controller
 
     public async Task<IActionResult> Details(int id)
     {
-        return View(await _tournamentRepository.GetByIdAsync(id));
+        var tournament = await _tournamentRepository.GetByIdAsync(id);
+        var applications = await _tournamentRepository.GetAcceptedApplicationsByTournamentIdAsync(id);
+
+        tournament.Participants = applications == null ? new List<Application>() : applications.ToList();
+        return View(tournament);
     }
 
     public IActionResult Create()
@@ -94,6 +98,7 @@ public class TournamentsController : Controller
                 TournamentId = joinViewModel.TournamentId,
                 UserId = user.Id,
                 UserName = user.UserName,
+                IsAccepted = false,
                 Elo = 0,
                 Hin = 0,
                 Fraction = joinViewModel.Fraction,
@@ -171,7 +176,7 @@ public class TournamentsController : Controller
 
     public async Task<IActionResult> Applications(int id)
     {
-        var applications = await _tournamentRepository.GetApplicationsByTournamentIdAsync(id);
+        var applications = await _tournamentRepository.GetNotAcceptedApplicationsByTournamentIdAsync(id);
         var applicationsVM = new ApplicationViewModel
         {
             Applications = applications,
@@ -202,30 +207,32 @@ public class TournamentsController : Controller
 
     public async Task<IActionResult> AcceptApplication(int id)
     {
-        var application = await _tournamentRepository.GetApplicationsByIdAsync(id);
-        _tournamentRepository.DeleteApplication(application);
-        var tournament = await _tournamentRepository.GetByIdAsync(application.TournamentId);
-        if (tournament != null)
+        var application = await _tournamentRepository.GetApplicationByIdAsync(id);
+        var tournament = await _tournamentRepository.GetByIdWithApplicationsAsync(application.TournamentId);
+        
+        if (application != null)
         {
             if (tournament.RegisteredParticipant == tournament.AvailableParticipant)
             {
                 // can not add new patricipant;
                 return View("Error");
             }
-            tournament.Participants.Add(application);
+            
+            application.IsAccepted = true;
             tournament.RegisteredParticipant += 1;
+            
             _tournamentRepository.Update(tournament);
-            return RedirectToAction("Applications", tournament.Id);
+            _tournamentRepository.UpdateApplication(application);
+            return RedirectToAction("Applications", "Tournaments", new { @id = application.TournamentId });
         }
 
         return View("Error");
-
     }
 
     public async Task<IActionResult> RejectApplication(int id)
     {
-        var application = await _tournamentRepository.GetApplicationsByIdAsync(id);
+        var application = await _tournamentRepository.GetApplicationByIdAsync(id);
         _tournamentRepository.DeleteApplication(application);
-        return RedirectToAction("Applications", application.TournamentId);
+        return RedirectToAction("Applications", "Tournaments", new { @id = application.TournamentId });
     }
 }
