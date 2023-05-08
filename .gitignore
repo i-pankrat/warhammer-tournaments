@@ -54,7 +54,7 @@ images/
 Migrations/
 *.log
 *.sqlite
-*.db
+*.db*
 # OS generated files #
 ######################
 .DS_Store?
