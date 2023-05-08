@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using WarhammerTournaments.Models;
+using WarhammerTournaments.DAL.Entity;
 
-namespace WarhammerTournaments.Data;
+namespace WarhammerTournaments.DAL.Data;
 
 public class ApplicationDbContext : IdentityDbContext<User>
 {
@@ -12,5 +12,5 @@ public class ApplicationDbContext : IdentityDbContext<User>
 
     public DbSet<Tournament> Tournaments { get; set; }
     public DbSet<Application> Applications { get; set; }
-    public DbSet<User> Users { get; set; }
+    // public DbSet<User> Users { get; set; } -- Defined already
 }

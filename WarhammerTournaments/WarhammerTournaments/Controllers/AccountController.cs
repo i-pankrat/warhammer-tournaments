@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using WarhammerTournaments.DAL.Data;
+using WarhammerTournaments.DAL.Entity;
 using WarhammerTournaments.Data;
 using WarhammerTournaments.Models;
 using WarhammerTournaments.ViewModels;
@@ -96,7 +98,7 @@ public class AccountController : Controller
 
         return RedirectToAction("Index", "Tournaments");
     }
-    
+
     public async Task<IActionResult> Logout()
     {
         await _signInManager.SignOutAsync();

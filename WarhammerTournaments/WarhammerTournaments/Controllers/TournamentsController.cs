@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using WarhammerTournaments.DAL;
+using WarhammerTournaments.DAL.Entity;
 using WarhammerTournaments.Interfaces;
 using WarhammerTournaments.Models;
 using WarhammerTournaments.ViewModels;
@@ -7,14 +9,14 @@ namespace WarhammerTournaments.Controllers;
 
 public class TournamentsController : Controller
 {
-    private readonly ITournamentRepository _tournamentRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IImageUploadService _imageUploadService;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public TournamentsController(ITournamentRepository tournamentRepository, IImageUploadService imageUploadService,
+    public TournamentsController(IUnitOfWork unitOfWork, IImageUploadService imageUploadService,
         IHttpContextAccessor httpContextAccessor)
     {
-        _tournamentRepository = tournamentRepository;
+        _unitOfWork = unitOfWork;
         _imageUploadService = imageUploadService;
         _httpContextAccessor = httpContextAccessor;
     }
@@ -22,14 +24,15 @@ public class TournamentsController : Controller
     // GET
     public async Task<IActionResult> Index()
     {
-        var tournaments = await _tournamentRepository.GetAll();
+        var tournaments = await _unitOfWork.TournamentRepository.GetAll();
         return View(tournaments);
     }
 
     public async Task<IActionResult> Details(int id)
     {
-        var tournament = await _tournamentRepository.GetByIdAsync(id);
-        var applications = await _tournamentRepository.GetAcceptedApplicationsByTournamentIdAsync(tournament.Id);
+        var tournament = await _unitOfWork.TournamentRepository.Get(id);
+        var applications =
+            await _unitOfWork.ApplicationRepository.Get(x => x.TournamentId == tournament.Id & x.IsAccepted);
         tournament.Participants = applications == null
             ? new List<Application>()
             : applications.Where(a => a.IsAccepted).ToList();
@@ -52,9 +55,11 @@ public class TournamentsController : Controller
         if (ModelState.IsValid)
         {
             var result = await _imageUploadService.UploadAsync(tournamentViewModel.Image);
+            var user = await _unitOfWork.UserRepository.Get(tournamentViewModel.OwnerId);
             var tournament = new Tournament
             {
                 OwnerId = tournamentViewModel.OwnerId,
+                OwnerUserName = user.UserName,
                 Title = tournamentViewModel.Title,
                 Description = tournamentViewModel.Description,
                 AvailableParticipant = tournamentViewModel.AvailableParticipant,
@@ -67,7 +72,8 @@ public class TournamentsController : Controller
                 EntranceFee = tournamentViewModel.EntranceFee,
             };
 
-            _tournamentRepository.Add(tournament);
+            await _unitOfWork.TournamentRepository.AddAsync(tournament);
+            await _unitOfWork.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
@@ -93,7 +99,7 @@ public class TournamentsController : Controller
     {
         if (ModelState.IsValid)
         {
-            var user = await _tournamentRepository.GetUserByIdAsync(joinViewModel.UserId);
+            var user = await _unitOfWork.UserRepository.Get(joinViewModel.UserId);
             var application = new Application
             {
                 TournamentId = joinViewModel.TournamentId,
@@ -106,7 +112,8 @@ public class TournamentsController : Controller
                 Roster = joinViewModel.Roster,
             };
 
-            _tournamentRepository.AddApplication(application);
+            await _unitOfWork.ApplicationRepository.AddAsync(application);
+            await _unitOfWork.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
@@ -117,7 +124,7 @@ public class TournamentsController : Controller
     [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {
-        var tournament = await _tournamentRepository.GetByIdAsync(id);
+        var tournament = await _unitOfWork.TournamentRepository.Get(id);
 
         if (tournament == null)
             return View("Error");
@@ -128,6 +135,7 @@ public class TournamentsController : Controller
             Title = tournament.Title,
             Description = tournament.Description,
             OwnerId = tournament.OwnerId,
+            OwnerUserName = tournament.OwnerId,
             Address = tournament.Address,
             AvailableParticipant = tournament.AvailableParticipant,
             Date = tournament.Date,
@@ -148,7 +156,7 @@ public class TournamentsController : Controller
             return View("Edit", tournamentViewModel);
         }
 
-        var oldTournament = await _tournamentRepository.GetByIdAsyncNoTracking(tournamentViewModel.Id);
+        var oldTournament = await _unitOfWork.TournamentRepository.GetNoTracking(tournamentViewModel.Id);
         if (oldTournament != null)
         {
             var deleteResult = await _imageUploadService.DeleteAsync(oldTournament.ImageId);
@@ -160,6 +168,7 @@ public class TournamentsController : Controller
                 Title = tournamentViewModel.Title,
                 Description = tournamentViewModel.Description,
                 OwnerId = tournamentViewModel.OwnerId,
+                OwnerUserName = tournamentViewModel.OwnerUserName,
                 Address = tournamentViewModel.Address,
                 AvailableParticipant = tournamentViewModel.AvailableParticipant,
                 Date = tournamentViewModel.Date,
@@ -168,7 +177,8 @@ public class TournamentsController : Controller
                 EntranceFee = tournamentViewModel.EntranceFee
             };
 
-            _tournamentRepository.Update(tournament);
+            _unitOfWork.TournamentRepository.Update(tournament);
+            await _unitOfWork.SaveChangesAsync();
             return RedirectToAction("Index", "Dashboard");
         }
 
@@ -177,7 +187,8 @@ public class TournamentsController : Controller
 
     public async Task<IActionResult> Applications(int id)
     {
-        var applications = await _tournamentRepository.GetNotAcceptedApplicationsByTournamentIdAsync(id);
+        var applications = await _unitOfWork.ApplicationRepository
+            .Get(x => x.TournamentId == id & !x.IsAccepted);
         var applicationsVM = new ApplicationViewModel
         {
             Applications = applications,
@@ -188,12 +199,13 @@ public class TournamentsController : Controller
 
     public async Task<IActionResult> Delete(int id)
     {
-        var tournament = await _tournamentRepository.GetByIdAsync(id);
+        var tournament = await _unitOfWork.TournamentRepository.Get(id);
 
         if (tournament != null)
         {
             var deleteResult = await _imageUploadService.DeleteAsync(tournament.ImageId);
-            _tournamentRepository.Delete(tournament);
+            _unitOfWork.TournamentRepository.Remove(tournament);
+            await _unitOfWork.SaveChangesAsync();
             return RedirectToAction("Applications");
         }
 
@@ -202,14 +214,16 @@ public class TournamentsController : Controller
 
     public async Task<IActionResult> DeleteAllApplications(int id)
     {
-        await _tournamentRepository.DeleteAllApplicationsByTournamentIdAsync(id);
+        var applications = await _unitOfWork.ApplicationRepository.Get(x => x.TournamentId == id & !x.IsAccepted);
+        _unitOfWork.ApplicationRepository.RemoveRange(applications);
+        await _unitOfWork.SaveChangesAsync();
         return RedirectToAction("Index", "Dashboard");
     }
 
     public async Task<IActionResult> AcceptApplication(int id)
     {
-        var application = await _tournamentRepository.GetApplicationByIdAsync(id);
-        var tournament = await _tournamentRepository.GetByIdWithApplicationsAsync(application.TournamentId);
+        var application = await _unitOfWork.ApplicationRepository.Get(id);
+        var tournament = await _unitOfWork.TournamentRepository.Get(application.TournamentId);
 
         if (application != null)
         {
@@ -222,8 +236,9 @@ public class TournamentsController : Controller
             application.IsAccepted = true;
             tournament.RegisteredParticipant += 1;
 
-            _tournamentRepository.Update(tournament);
-            _tournamentRepository.UpdateApplication(application);
+            _unitOfWork.TournamentRepository.Update(tournament);
+            _unitOfWork.ApplicationRepository.Update(application);
+            await _unitOfWork.SaveChangesAsync();
             return RedirectToAction("Applications", "Tournaments", new { @id = application.TournamentId });
         }
 
@@ -232,8 +247,9 @@ public class TournamentsController : Controller
 
     public async Task<IActionResult> RejectApplication(int id)
     {
-        var application = await _tournamentRepository.GetApplicationByIdAsync(id);
-        _tournamentRepository.DeleteApplication(application);
+        var application = await _unitOfWork.ApplicationRepository.Get(id);
+        _unitOfWork.ApplicationRepository.Remove(application);
+        await _unitOfWork.SaveChangesAsync();
         return RedirectToAction("Applications", "Tournaments", new { @id = application.TournamentId });
     }
 }

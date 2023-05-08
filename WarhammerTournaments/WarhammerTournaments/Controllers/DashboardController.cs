@@ -1,22 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
-using WarhammerTournaments.Data;
-using WarhammerTournaments.Interfaces;
-using WarhammerTournaments.ViewModels;
+using WarhammerTournaments.DAL;
 
 namespace WarhammerTournaments.Controllers;
 
 public class DashboardController : Controller
 {
-    private readonly IDashboardRepository _dashboardRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public DashboardController(IDashboardRepository dashboardRepository)
+    public DashboardController(IUnitOfWork unitOfWork)
     {
-        _dashboardRepository = dashboardRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<IActionResult> Index()
     {
-        var userTournaments = await _dashboardRepository.GetAllUserTournaments();
+        var userTournaments = await _unitOfWork.UserRepository.GetAllUserTournaments();
         /*var dashboardViewModel = new DashboardViewModel
         {
             Tournaments = userTournaments

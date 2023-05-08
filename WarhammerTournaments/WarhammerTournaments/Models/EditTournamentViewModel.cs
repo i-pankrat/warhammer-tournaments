@@ -1,4 +1,4 @@
-namespace WarhammerTournaments.ViewModels;
+namespace WarhammerTournaments.Models;
 
 public class EditTournamentViewModel
 {

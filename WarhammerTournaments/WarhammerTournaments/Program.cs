@@ -1,22 +1,25 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using WarhammerTournaments.DAL;
+using WarhammerTournaments.DAL.Data;
+using WarhammerTournaments.DAL.Entity;
 using WarhammerTournaments.Data;
 using WarhammerTournaments.Interfaces;
-using WarhammerTournaments.Models;
-using WarhammerTournaments.Repository;
 using WarhammerTournaments.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<ITournamentRepository, TournamentRepository>();
 builder.Services.AddScoped<IImageUploadService, ImageUploadService>();
-builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
+builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"),
+        b => b.MigrationsAssembly("WarhammerTournaments")));
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddMemoryCache();
 builder.Services.AddSession();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();

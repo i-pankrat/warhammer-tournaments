@@ -1,6 +1,6 @@
-using WarhammerTournaments.Models;
+using WarhammerTournaments.DAL.Entity;
 
-namespace WarhammerTournaments.ViewModels;
+namespace WarhammerTournaments.Models;
 
 public class ApplicationViewModel
 {

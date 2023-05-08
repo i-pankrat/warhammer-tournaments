@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
-using ErrorEventArgs = Microsoft.AspNetCore.Components.Web.ErrorEventArgs;
 
-namespace WarhammerTournaments.ViewModels;
+namespace WarhammerTournaments.Models;
 
 public class LoginViewModel
 {

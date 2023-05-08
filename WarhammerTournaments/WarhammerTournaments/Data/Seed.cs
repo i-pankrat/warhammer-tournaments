@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
-using WarhammerTournaments.Models;
+using WarhammerTournaments.DAL.Data;
+using WarhammerTournaments.DAL.Entity;
 
 namespace WarhammerTournaments.Data;
 
@@ -31,7 +32,7 @@ public static class Seed
                 new()
                 {
                     Title = "Турнир профессионалов",
-                    ImageUrl = 
+                    ImageUrl =
                         "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Operation_Sci-Fi_Con_2015.jpg/1920px-Operation_Sci-Fi_Con_2015.jpg",
                     Address = "Улица Пушкина Дом Калатушкино",
                     Description = "ТОП 100 ладера вход",
