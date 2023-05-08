@@ -25,7 +25,6 @@ body {
 }
 
 /* Override bootsrtap */
-
 .form-control:valid {
     background-color: #393939 !important;
 }
@@ -38,8 +37,7 @@ body {
     border-radius: 2em;
 }
 
-/* Templates */
-
+/* Text colors */
 .text-grey {
     color: #d1d1d1 !important;
 }
@@ -55,10 +53,12 @@ body {
 .text-yellow {
     color: #faff00 !important;
 }
-.min-vh-80 {
-    height: 80vh;
+
+.table-cell-text {
+    color: #ababab !important;
 }
 
+/* Buttons */
 .purple-btn-custom {
     border-radius: 10px;
     background-color: #d1007e;
@@ -73,12 +73,27 @@ body {
     border: 1px solid #ffffff;
 }
 
+/* Backgrounds */
 .bg-full-black {
     background-color: #000000;
 }
 
+.bg-custom-grey {
+    background-color: #0e0e0e;
+}
+
 .tournament-card-bg {
     background-color: #333634;
+}
+
+/* Other */
+
+.min-vh-80 {
+    height: 80vh;
+}
+
+.text-hover:hover {
+    color: #d1d1d1 !important;
 }
 
 /* Navigation bar */

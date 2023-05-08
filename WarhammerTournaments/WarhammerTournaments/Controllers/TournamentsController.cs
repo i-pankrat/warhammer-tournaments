@@ -29,9 +29,10 @@ public class TournamentsController : Controller
     public async Task<IActionResult> Details(int id)
     {
         var tournament = await _tournamentRepository.GetByIdAsync(id);
-        var applications = await _tournamentRepository.GetAcceptedApplicationsByTournamentIdAsync(id);
-
-        tournament.Participants = applications == null ? new List<Application>() : applications.ToList();
+        var applications = await _tournamentRepository.GetAcceptedApplicationsByTournamentIdAsync(tournament.Id);
+        tournament.Participants = applications == null
+            ? new List<Application>()
+            : applications.Where(a => a.IsAccepted).ToList();
         return View(tournament);
     }
 
@@ -152,7 +153,7 @@ public class TournamentsController : Controller
         {
             var deleteResult = await _imageUploadService.DeleteAsync(oldTournament.ImageId);
             var uploadResult = await _imageUploadService.UploadAsync(tournamentViewModel.Image);
-            
+
             var tournament = new Tournament
             {
                 Id = tournamentViewModel.Id,
@@ -209,7 +210,7 @@ public class TournamentsController : Controller
     {
         var application = await _tournamentRepository.GetApplicationByIdAsync(id);
         var tournament = await _tournamentRepository.GetByIdWithApplicationsAsync(application.TournamentId);
-        
+
         if (application != null)
         {
             if (tournament.RegisteredParticipant == tournament.AvailableParticipant)
@@ -217,10 +218,10 @@ public class TournamentsController : Controller
                 // can not add new patricipant;
                 return View("Error");
             }
-            
+
             application.IsAccepted = true;
             tournament.RegisteredParticipant += 1;
-            
+
             _tournamentRepository.Update(tournament);
             _tournamentRepository.UpdateApplication(application);
             return RedirectToAction("Applications", "Tournaments", new { @id = application.TournamentId });
