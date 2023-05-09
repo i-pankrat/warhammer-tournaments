@@ -39,11 +39,13 @@ public class TournamentsController : Controller
         return View(tournament);
     }
 
-    public IActionResult Create()
+    public async Task<IActionResult> Create()
     {
         var curUserId = _httpContextAccessor.HttpContext.User.GetUserId();
+        var user = await _unitOfWork.UserRepository.Get(curUserId);
         var tournamentViewModel = new TournamentViewModel
         {
+            OwnerUserName = user.UserName,
             OwnerId = curUserId
         };
         return View(tournamentViewModel);

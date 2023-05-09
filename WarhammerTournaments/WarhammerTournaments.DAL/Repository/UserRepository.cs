@@ -23,7 +23,7 @@ public class UserRepository : ARepository<User, string>, IUserRepository
     public async Task<List<Tournament>> GetAllUserTournaments()
     {
         var curUserId = _httpContextAccessor.HttpContext?.User.GetUserId();
-        var userTournaments = _context.Tournaments.Where(t => t.OwnerId == curUserId);
+        var userTournaments = _context.Tournaments.Where(t => t.OwnerId == curUserId && t.IsActive);
         return await userTournaments.ToListAsync();
     }
 }
