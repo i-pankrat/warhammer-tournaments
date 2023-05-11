@@ -10,15 +10,24 @@
                     <h1>Покажи, кто здесь сильнее! Одолей своих врагов на поле битвы.</h1>
                 </div>
                 <div class="row d-flex">
-                    <div class="col d-flex justify-content-end">
-                        <a asp-area="" asp-controller="Tournaments" asp-action="Index" class="btn black-btn-custom  mt-3">Турниры</a>
-                    </div>
-                    @*@if (User.Identity.IsAuthenticated)
-                                                {*@
-                    <div class="col d-flex justify-content-start">
-                        <a asp-area="" asp-controller="Account" asp-action="Register" class="btn purple-btn-custom mt-3">Зарегестрироваться</a>
-                    </div>
-                    @*}*@
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="col d-flex justify-content-center">
+                            <a asp-area="" asp-controller="Tournaments" asp-action="Index" class="btn black-btn-custom  mt-3">Турниры</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col d-flex justify-content-end">
+                            <a asp-area="" asp-controller="Tournaments" asp-action="Index" class="btn black-btn-custom  mt-3">Турниры</a>
+                        </div>
+
+                        <div class="col d-flex justify-content-start">
+                            <a asp-area="" asp-controller="Account" asp-action="Register" class="btn purple-btn-custom mt-3">Зарегестрироваться</a>
+                        </div>
+                    }
+
                 </div>
             </div>
         </div>
