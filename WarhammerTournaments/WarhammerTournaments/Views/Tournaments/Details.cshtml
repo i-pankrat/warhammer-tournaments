@@ -13,18 +13,18 @@
                 <div class="col-lg-8">
                     <div class="mb-3 text-grey">
                         <div class="mb-3 lh-1">
-                            <span>Организатор: @Model.OwnerId</span>
+                            <span>Организатор: @Model.OwnerUserName</span>
                         </div>
                         <div class="mb-3 lh-1">
-                            <i class="bi bi-house"></i>
+                            <i class="bi bi-house text-blue"></i>
                             <span>@Model.Address</span>
                         </div>
                         <div class="mb-3 lh-1">
-                            <i class="bi bi-calendar-check"></i>
+                            <i class="bi bi-calendar-check text-green"></i>
                             <span>@Model.Date.ToString("g")</span>
                         </div>
                         <div class="lh-1">
-                            <i class="bi bi-person"></i>
+                            <i class="bi bi-person text-yellow"></i>
                             <span>@Model.RegisteredParticipant/@Model.AvailableParticipant</span>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                         <img src="@Model.ImageUrl" alt="tournament" class="img-fluid w-100">
                     </div>
                     <div class="flex-row float-end">
-                        <a asp-area="" asp-controller="" asp-action="" class="btn purple-btn-custom ms-auto">Присоединиться</a>
+                        <a asp-area="" asp-controller="Tournaments" asp-action="Join" asp-route-id="@Model.Id" class="btn purple-btn-custom ms-auto">Присоединиться</a>
                     </div>
                 </div>
             </div>
@@ -64,25 +64,25 @@
                     {
                         <tr>
                             <th class="text-hover" scope="row" role="button" data-bs-toggle="modal" data-bs-target="#roster-@participant.UserName">@participant.UserName</th>
-                            
+
                             @* Modal *@
                             <div class="modal fade" id="roster-@participant.UserName" tabindex="-1" role="dialog" aria-labelledby="roster_@participant.UserName-Label" aria-hidden="true">
-                              <div class="modal-dialog modal-xl" role="document">
-                                <div class="modal-content bg-custom-grey">
-                                  <div class="modal-header bg-custom-grey">
-                                    <h5 class="modal-title" id="exampleModalLabel">Ростер @participant.UserName</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                  </div>
-                                  <div class="modal-body" >
-                                    <span style="white-space: pre-line">@participant.Roster</span>
-                                  </div>
-                                  <div class="modal-footer bg-custom-grey">
-                                    <button type="button" class="btn black-btn-custom" data-bs-dismiss="modal">Закрыть</button>
-                                  </div>
+                                <div class="modal-dialog modal-xl" role="document">
+                                    <div class="modal-content bg-custom-grey">
+                                        <div class="modal-header bg-custom-grey">
+                                            <h5 class="modal-title" id="exampleModalLabel">Ростер @participant.UserName</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <span style="white-space: pre-line">@participant.Roster</span>
+                                        </div>
+                                        <div class="modal-footer bg-custom-grey">
+                                            <button type="button" class="btn black-btn-custom" data-bs-dismiss="modal">Закрыть</button>
+                                        </div>
+                                    </div>
                                 </div>
-                              </div>
                             </div>
-                            
+
                             <td>TODO</td>
                             <td>TODO</td>
                             <td>@participant.Fraction</td>
