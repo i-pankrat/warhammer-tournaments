@@ -35,6 +35,17 @@ body {
 
 .card {
     border-radius: 2em;
+    width: 100%;
+}
+
+.card-img-top {
+    width: fit-content;
+    height: fit-content;
+    object-fit: cover;
+    min-height: 300px;
+    max-height: 300px;
+    min-width: 100%;
+    overflow: hidden;
 }
 
 /* Text colors */
