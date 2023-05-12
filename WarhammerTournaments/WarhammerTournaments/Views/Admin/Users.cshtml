@@ -1,0 +1,52 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model ApplicationUsersViewModel
+
+<div class="container-fluid bg-full-black rounded-3 pb-5">
+    <div class="row d-flex justify-content-center bg-transparent pt-5 pb-3 px-5">
+        <div class="col">
+            <div class="row">
+                <div class="col">
+                    <h1 class="text-white mb-5">Пользователи</h1>
+                </div>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+                @foreach (var user in Model.Users)
+                {
+                    <div class="col d-flex">
+                        <div class="card d-flex mb-4 p-1 pt-3 mb-xl-0 tournament-card-bg text-white">
+                            <div class="card-body">
+                                <h3 class="mb-4">
+                                    Имя: @user.UserName
+                                </h3>
+                                <div class="row mx-auto p-2">
+                                    @using (Html.BeginForm("MakeOrganizer", "Admin", new { id = user.Id }))
+                                    {
+                                        <button type="submit" class="btn d-flex purple-btn-custom">
+                                            <span>Организатор</span>
+                                        </button>
+                                    }
+                                </div>
+                                <div class="row mx-auto p-2">
+                                    @using (Html.BeginForm("MakeAdmin", "Admin", new { id = user.Id }))
+                                    {
+                                        <button type="submit" class="btn d-flex purple-btn-custom">
+                                            <span>Админ</span>
+                                        </button>
+                                    }
+                                </div>
+                                <div class=" row mx-auto p-2">
+                                    @using (Html.BeginForm("DeleteUser", "Admin", new { id = user.Id }))
+                                    {
+                                        <button asp-area="" asp-controller="Admin" asp-action="MakeOrganizer" class="btn d-flex purple-btn-custom">
+                                            <span>Удалить</span>
+                                        </button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

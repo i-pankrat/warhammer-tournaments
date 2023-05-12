@@ -42,6 +42,12 @@
                             <a class="nav-link text-white" asp-area="" asp-controller="Dashboard" asp-action="Index">Мои турниры</a>
                         </li>
                     }
+                    @if (User.Identity.IsAuthenticated && User.IsInRole(UserRoles.Admin))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Admin" asp-action="Index">Админка</a>
+                        </li>
+                    }
                 </ul>
                 @if (User.Identity.IsAuthenticated)
                 {

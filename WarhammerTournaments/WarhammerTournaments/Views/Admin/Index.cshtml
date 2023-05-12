@@ -1,0 +1,23 @@
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<WarhammerTournaments.DAL.Entity.Tournament>
+
+<div class="container-fluid bg-full-black rounded-3 pb-5">
+    <div class="row d-flex justify-content-center bg-transparent pt-5 pb-3 px-5">
+        <div class="col">
+            <div class="row">
+                <div class="col">
+                    <h1 class="text-white mb-5">Панель администратора</h1>
+                </div>
+            </div>
+            <div class="row">
+                <a asp-area="" asp-controller="Admin" asp-action="Users" class="btn d-flex purple-btn-custom float-end">
+                    <span class="pe-2">
+                        <i class="bi bi-people-fill"></i>
+                    </span>
+                    <span>Пользователи</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

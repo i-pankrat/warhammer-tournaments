@@ -9,6 +9,7 @@ using WarhammerTournaments.DAL;
 using WarhammerTournaments.DAL.Data;
 using WarhammerTournaments.DAL.Entity;
 using WarhammerTournaments.Data;
+using WarhammerTournaments.Data.Configurations;
 using WarhammerTournaments.Interfaces;
 using WarhammerTournaments.Services;
 
@@ -60,9 +61,11 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 var app = builder.Build();
 
-if (args.Length == 1 && args[0].ToLower() == "seeddata")
+if (args.Length == 1 && args[0].ToLower() == "seed")
 {
-    await Seed.SeedUsersAndRolesAsync(app);
+    // Add admin configuration
+    var adminConfiguration = builder.Configuration.GetSection("AdminConfiguration").Get<AdminConfiguration>();
+    await Seed.SeedRolesAndAdmin(app, adminConfiguration);
     // Seed.SeedData(app);
 }
 
