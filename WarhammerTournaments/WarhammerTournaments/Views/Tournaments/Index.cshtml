@@ -4,40 +4,51 @@
 <div class="container-fluid bg-full-black rounded-3 pb-5">
     <div class="row d-flex justify-content-center bg-transparent pt-5 pb-3 px-5">
         <div class="col">
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-                @foreach (var tournament in Model)
-                {
-                    <div class="col d-flex align-items-stretch">
-                        <div class="card d-flex mb-4 p-1 pt-3 mb-xl-0 tournament-card-bg text-white">
-                            <a asp-area="" asp-controller="Tournaments" asp-action="Details" asp-route-id="@tournament.Id">
-                                <img src="@tournament.ImageUrl" alt="tournament" class="card-img-top p-2 img-fluid">
-                            </a>
-                            <div class="card-body d-flex flex-column">
-                                <h3 class="mb-4">
-                                    @tournament.Title
-                                </h3>
-                                <div class="mb-3 mt-auto">
-                                    <div class="mb-3 lh-1">
-                                        <i class="bi bi-house text-blue"></i>
-                                        <span>@tournament.Address</span>
-                                    </div>
-                                    <div class="mb-3 lh-1">
-                                        <i class="bi bi-calendar-check text-green"></i>
-                                        <span>@tournament.Date.ToString("g")</span>
-                                    </div>
-                                    <div class="mb-3 lh-1">
-                                        <i class="bi bi-person text-yellow"></i>
-                                        <span>@tournament.RegisteredParticipant/@tournament.AvailableParticipant</span>
-                                    </div>
-                                    <div class="lh-1 d-flex">
-                                        <a asp-area="" asp-controller="Tournaments" asp-action="Join" asp-route-id="@tournament.Id" class="btn flex-fill purple-btn-custom mx-auto">Присоединиться</a>
+            @if (!Model.Any())
+            {
+                <div class="row g-3 justify-content-center">
+                    <div class="text-white text-center justify-content-center">
+                        <h1>К сожалению, пока что не проводится ни одного турнира :(</h1>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+                    @foreach (var tournament in Model)
+                    {
+                        <div class="col d-flex align-items-stretch">
+                            <div class="card d-flex mb-4 p-1 pt-3 mb-xl-0 tournament-card-bg text-white">
+                                <a asp-area="" asp-controller="Tournaments" asp-action="Details" asp-route-id="@tournament.Id">
+                                    <img src="@tournament.ImageUrl" alt="tournament" class="card-img-top p-2 img-fluid">
+                                </a>
+                                <div class="card-body d-flex flex-column">
+                                    <h3 class="mb-4">
+                                        @tournament.Title
+                                    </h3>
+                                    <div class="mb-3 mt-auto">
+                                        <div class="mb-3 lh-1">
+                                            <i class="bi bi-house text-blue"></i>
+                                            <span>@tournament.Address</span>
+                                        </div>
+                                        <div class="mb-3 lh-1">
+                                            <i class="bi bi-calendar-check text-green"></i>
+                                            <span>@tournament.Date.ToString("g")</span>
+                                        </div>
+                                        <div class="mb-3 lh-1">
+                                            <i class="bi bi-person text-yellow"></i>
+                                            <span>@tournament.RegisteredParticipant/@tournament.AvailableParticipant</span>
+                                        </div>
+                                        <div class="lh-1 d-flex">
+                                            <a asp-area="" asp-controller="Tournaments" asp-action="Join" asp-route-id="@tournament.Id" class="btn flex-fill purple-btn-custom mx-auto">Присоединиться</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                }
-            </div>
+                    }
+                </div>
+            }
         </div>
     </div>
 </div>
