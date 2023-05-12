@@ -17,7 +17,8 @@ public class DashboardController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var userTournaments = await _unitOfWork.UserRepository.GetAllUserTournaments();
+        var userId = User.GetUserId();
+        var userTournaments = await _unitOfWork.TournamentRepository.Get(x => x.OwnerId == userId);
         /*var dashboardViewModel = new DashboardViewModel
         {
             Tournaments = userTournaments

@@ -7,7 +7,6 @@ namespace WarhammerTournaments.DAL;
 public interface IUnitOfWork
 {
     public TournamentRepository TournamentRepository { get; }
-    public IUserRepository UserRepository { get; }
     public IEntityRepository<Application> ApplicationRepository { get; }
     public void Save();
     public Task SaveChangesAsync();

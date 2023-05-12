@@ -28,7 +28,7 @@ public static class Seed
         {
             return;
         }
-        
+
         var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
         var adminUser = await userManager.FindByEmailAsync(adminConfiguration.Email);
 

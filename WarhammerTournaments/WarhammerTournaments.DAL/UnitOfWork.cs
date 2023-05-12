@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Http;
 using WarhammerTournaments.DAL.Data;
 using WarhammerTournaments.DAL.Entity;
 using WarhammerTournaments.DAL.Interface;
@@ -8,16 +7,13 @@ namespace WarhammerTournaments.DAL;
 
 public sealed class UnitOfWork : IUnitOfWork, IDisposable
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
     private ApplicationDbContext _context;
     private TournamentRepository _tournamentRepository;
     private IEntityRepository<Application> _applicationRepository;
-    private IUserRepository _userRepository;
 
-    public UnitOfWork(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
+    public UnitOfWork(ApplicationDbContext context)
     {
         _context = context;
-        _httpContextAccessor = httpContextAccessor;
     }
 
     public TournamentRepository TournamentRepository
@@ -30,19 +26,6 @@ public sealed class UnitOfWork : IUnitOfWork, IDisposable
             }
 
             return _tournamentRepository;
-        }
-    }
-
-    public IUserRepository UserRepository
-    {
-        get
-        {
-            if (_userRepository == null)
-            {
-                _userRepository = new UserRepository(_context, _httpContextAccessor);
-            }
-
-            return _userRepository;
         }
     }
 

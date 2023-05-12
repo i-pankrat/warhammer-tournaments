@@ -45,7 +45,7 @@ public class AccountController : Controller
             }
         }
     }
-    
+
     [HttpGet]
     public IActionResult Login()
     {
@@ -65,7 +65,7 @@ public class AccountController : Controller
         {
             return RedirectToAction("Index", "Home");
         }
-        
+
         if (!ModelState.IsValid) return View(loginViewModel);
 
         var user = await _userManager.FindByEmailAsync(loginViewModel.EmailAddress);
@@ -117,7 +117,7 @@ public class AccountController : Controller
         {
             return RedirectToAction("Index", "Home");
         }
-        
+
         if (!ModelState.IsValid)
             return View(registerViewModel);
 

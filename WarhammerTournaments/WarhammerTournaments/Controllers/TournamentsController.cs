@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WarhammerTournaments.DAL;
 using WarhammerTournaments.DAL.Data;
@@ -15,13 +16,15 @@ public class TournamentsController : Controller
     private readonly IUnitOfWork _unitOfWork;
     private readonly IImageUploadService _imageUploadService;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly UserManager<ApplicationUser> _userManager;
 
     public TournamentsController(IUnitOfWork unitOfWork, IImageUploadService imageUploadService,
-        IHttpContextAccessor httpContextAccessor)
+        IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager)
     {
         _unitOfWork = unitOfWork;
         _imageUploadService = imageUploadService;
         _httpContextAccessor = httpContextAccessor;
+        _userManager = userManager;
     }
 
     [AllowAnonymous]
@@ -49,7 +52,7 @@ public class TournamentsController : Controller
     public async Task<IActionResult> Create()
     {
         var curUserId = _httpContextAccessor.HttpContext.User.GetUserId();
-        var user = await _unitOfWork.UserRepository.Get(curUserId);
+        var user = await _userManager.FindByIdAsync(curUserId);
         var tournamentViewModel = new TournamentViewModel
         {
             OwnerUserName = user.UserName,
@@ -64,7 +67,7 @@ public class TournamentsController : Controller
         if (ModelState.IsValid)
         {
             var result = await _imageUploadService.UploadAsync(tournamentViewModel.Image);
-            var user = await _unitOfWork.UserRepository.Get(tournamentViewModel.OwnerId);
+            var user = await _userManager.FindByIdAsync(tournamentViewModel.OwnerId);
             var tournament = new Tournament
             {
                 OwnerId = tournamentViewModel.OwnerId,
@@ -108,7 +111,7 @@ public class TournamentsController : Controller
     {
         if (ModelState.IsValid)
         {
-            var user = await _unitOfWork.UserRepository.Get(joinViewModel.UserId);
+            var user = await _userManager.FindByIdAsync(joinViewModel.UserId);
             var application = new Application
             {
                 TournamentId = joinViewModel.TournamentId,
@@ -206,7 +209,7 @@ public class TournamentsController : Controller
         };
         return View(applicationsVM);
     }
-    
+
     public async Task<IActionResult> Delete(int id)
     {
         var tournament = await _unitOfWork.TournamentRepository.Get(id);
@@ -221,7 +224,7 @@ public class TournamentsController : Controller
 
         return View("Error");
     }
-    
+
     public async Task<IActionResult> DeleteAllApplications(int id)
     {
         var applications = await _unitOfWork.ApplicationRepository.Get(x => x.TournamentId == id & !x.IsAccepted);
@@ -229,7 +232,7 @@ public class TournamentsController : Controller
         await _unitOfWork.SaveChangesAsync();
         return RedirectToAction("Index", "Dashboard");
     }
-    
+
     public async Task<IActionResult> AcceptApplication(int id)
     {
         var application = await _unitOfWork.ApplicationRepository.Get(id);
@@ -254,7 +257,7 @@ public class TournamentsController : Controller
 
         return View("Error");
     }
-    
+
     public async Task<IActionResult> RejectApplication(int id)
     {
         var application = await _unitOfWork.ApplicationRepository.Get(id);
