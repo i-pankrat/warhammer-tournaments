@@ -24,6 +24,7 @@
 
     <ItemGroup>
         <PackageReference Include="Imagekit" Version="4.0.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.5" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.5" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">
@@ -78,6 +79,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\User.ManagementService\User.ManagementService.csproj" />
       <ProjectReference Include="..\WarhammerTournaments.DAL\WarhammerTournaments.DAL.csproj" />
     </ItemGroup>
 

@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WarhammerTournaments.DAL;
+using WarhammerTournaments.DAL.Data;
 
 namespace WarhammerTournaments.Controllers;
 
+[Authorize(Roles = $"{UserRoles.Organizer}, {UserRoles.Admin}")]
 public class DashboardController : Controller
 {
     private readonly IUnitOfWork _unitOfWork;

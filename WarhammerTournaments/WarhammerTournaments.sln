@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarhammerTournaments", "War
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarhammerTournaments.DAL", "WarhammerTournaments.DAL\WarhammerTournaments.DAL.csproj", "{D8F70E66-2D05-4F10-BD63-13D1CBEB2073}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User.ManagementService", "User.ManagementService\User.ManagementService.csproj", "{EECE3376-2ADB-434C-A608-B42CF2278FFF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{D8F70E66-2D05-4F10-BD63-13D1CBEB2073}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8F70E66-2D05-4F10-BD63-13D1CBEB2073}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8F70E66-2D05-4F10-BD63-13D1CBEB2073}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EECE3376-2ADB-434C-A608-B42CF2278FFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EECE3376-2ADB-434C-A608-B42CF2278FFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EECE3376-2ADB-434C-A608-B42CF2278FFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EECE3376-2ADB-434C-A608-B42CF2278FFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -5,7 +5,7 @@ namespace WarhammerTournaments.DAL.Entity;
 public class Application : BaseEntity
 {
     // User information
-    public User User { get; set; }
+    public ApplicationUser ApplicationUser { get; set; }
     [ForeignKey("User")] public string UserId { get; set; }
     public string UserName { get; set; }
     public int Elo { get; set; }

@@ -26,38 +26,38 @@ public abstract class ARepository<TEntity, TId> : IRepository<TEntity, TId> wher
         return await _context.Set<TEntity>().Where(selector).ToListAsync();
     }
 
-    public void Add(TEntity entity)
+    public virtual void Add(TEntity entity)
     {
         // just generate sql
         _context.Add(entity);
     }
 
-    public void Update(TEntity entity)
+    public virtual void Update(TEntity entity)
     {
         _context.Update(entity);
     }
 
-    public void Remove(TEntity entity)
+    public virtual void Remove(TEntity entity)
     {
         _context.Remove(entity);
     }
 
-    public async Task AddAsync(TEntity entity)
+    public virtual async Task AddAsync(TEntity entity)
     {
         await _context.AddAsync(entity);
     }
 
-    public void AddRange(IEnumerable<TEntity> entities)
+    public virtual void AddRange(IEnumerable<TEntity> entities)
     {
         _context.Set<TEntity>().AddRange(entities);
     }
 
-    public async Task AddRangeAsync(IEnumerable<TEntity> entities)
+    public virtual async Task AddRangeAsync(IEnumerable<TEntity> entities)
     {
         await _context.Set<TEntity>().AddRangeAsync(entities);
     }
 
-    public void RemoveRange(IEnumerable<TEntity> entities)
+    public virtual void RemoveRange(IEnumerable<TEntity> entities)
     {
         _context.Set<TEntity>().RemoveRange(entities);
     }

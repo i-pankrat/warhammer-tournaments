@@ -6,7 +6,7 @@ using WarhammerTournaments.DAL.Interface;
 
 namespace WarhammerTournaments.DAL.Repository;
 
-public class UserRepository : ARepository<User, string>, IUserRepository
+public class UserRepository : ARepository<ApplicationUser, string>, IUserRepository
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -15,7 +15,7 @@ public class UserRepository : ARepository<User, string>, IUserRepository
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public override async Task<User?> Get(string id)
+    public override async Task<ApplicationUser?> Get(string id)
     {
         return await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
     }

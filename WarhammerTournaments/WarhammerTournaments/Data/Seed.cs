@@ -76,13 +76,13 @@ public static class Seed
         var devPassword = "@Development_Password_1@";
 
         // Users
-        var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<User>>();
+        var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
         var adminEmail = "admin@testpankrat.com";
 
         var adminUser = await userManager.FindByEmailAsync(adminEmail);
         if (adminUser == null)
         {
-            var newAdminUser = new User
+            var newAdminUser = new ApplicationUser
             {
                 UserName = "pankratadmin",
                 Email = adminEmail,
@@ -106,7 +106,7 @@ public static class Seed
         var organizer = await userManager.FindByEmailAsync(organizerEmail);
         if (organizer == null)
         {
-            var newOrganizerUser = new User
+            var newOrganizerUser = new ApplicationUser
             {
                 UserName = "pankratorganizer",
                 Email = organizerEmail,
@@ -130,7 +130,7 @@ public static class Seed
         var appUser = await userManager.FindByEmailAsync(userEmail);
         if (appUser == null)
         {
-            var newAppUser = new User
+            var newAppUser = new ApplicationUser
             {
                 UserName = "pankratuser",
                 Email = userEmail,
