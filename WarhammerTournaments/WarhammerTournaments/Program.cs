@@ -18,8 +18,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IImageUploadService, ImageUploadService>();
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+var conn = Environment.GetEnvironmentVariable("ConnectionStrings_DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"),
+    options.UseNpgsql(conn,
         b => b.MigrationsAssembly("WarhammerTournaments")));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddMemoryCache();
