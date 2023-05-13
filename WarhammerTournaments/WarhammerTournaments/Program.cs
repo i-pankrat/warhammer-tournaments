@@ -60,13 +60,9 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 var app = builder.Build();
 
-if (args.Length == 1 && args[0].ToLower() == "seed")
-{
-    // Add admin configuration
-    var adminConfiguration = builder.Configuration.GetSection("AdminConfiguration").Get<AdminConfiguration>();
-    await Seed.SeedRolesAndAdmin(app, adminConfiguration);
-    // Seed.SeedData(app);
-}
+// Set roles and admin
+var adminConfiguration = builder.Configuration.GetSection("AdminConfiguration").Get<AdminConfiguration>();
+await Seed.SeedRolesAndAdmin(app, adminConfiguration);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

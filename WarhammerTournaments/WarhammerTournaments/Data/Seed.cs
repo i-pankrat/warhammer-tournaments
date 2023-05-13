@@ -11,7 +11,7 @@ public static class Seed
         AdminConfiguration? adminConfiguration)
     {
         using var serviceScope = applicationBuilder.ApplicationServices.CreateScope();
-
+        
         // Roles
         var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
@@ -22,8 +22,7 @@ public static class Seed
         if (!await roleManager.RoleExistsAsync(UserRoles.User))
             await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
 
-        // Users
-
+        // Admin
         if (adminConfiguration == null)
         {
             return;

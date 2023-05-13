@@ -27,23 +27,6 @@ public class AccountController : Controller
         _context = context;
         _roleManager = roleManager;
         _emailService = emailService;
-        CreateRoles();
-    }
-
-    private async void CreateRoles()
-    {
-        var roles = new[] { UserRoles.User, UserRoles.Organizer, UserRoles.Admin };
-        foreach (var role in roles)
-        {
-            if (!await _roleManager.RoleExistsAsync(role))
-            {
-                var identityRole = new IdentityRole
-                {
-                    Name = role
-                };
-                await _roleManager.CreateAsync(identityRole);
-            }
-        }
     }
 
     [HttpGet]
