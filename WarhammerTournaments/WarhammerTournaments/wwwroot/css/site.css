@@ -129,9 +129,27 @@ body {
     margin-right: 20px;
 }
 
-.card-horizontal {
-    display: flex;
-    flex: 1 1 auto;
+/* Underline effect */
+.navbar .container-fluid .navbar-collapse .navbar-nav .nav-item {
+    position: relative;
+}
+
+.navbar .container-fluid .navbar-collapse .navbar-nav .nav-item::after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    content: '';
+    background-color: #d1007e;
+    width: 0;
+    height: 4px;
+    transition: all .5s;
+
+}
+
+.navbar .container-fluid .navbar-collapse .navbar-nav .nav-item:hover::after {
+    width: 100%;
 }
 
 /* Footer */
