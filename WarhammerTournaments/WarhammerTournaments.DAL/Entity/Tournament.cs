@@ -11,6 +11,7 @@ public class Tournament : BaseEntity
     // Tournament data
     public string Title { get; set; }
     public string Description { get; set; }
+    public string Rules { get; set; }
     public int AvailableParticipant { get; set; }
     public int RegisteredParticipant { get; set; }
     public string Address { get; set; }

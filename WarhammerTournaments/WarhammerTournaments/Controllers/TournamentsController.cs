@@ -74,6 +74,7 @@ public class TournamentsController : Controller
                 OwnerUserName = user.UserName,
                 Title = tournamentViewModel.Title,
                 Description = tournamentViewModel.Description,
+                Rules = tournamentViewModel.Rules,
                 AvailableParticipant = tournamentViewModel.AvailableParticipant,
                 RegisteredParticipant = 0,
                 Participants = new List<Application>(),
