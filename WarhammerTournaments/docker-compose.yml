@@ -1,0 +1,44 @@
+version: '3.4'
+
+networks:
+  warhammer-network:
+    driver: bridge
+
+services:
+  web:
+    container_name: warhammertournaments-container
+    image: warhammertournaments
+    build:
+      context: .
+      dockerfile: WarhammerTournaments/Dockerfile
+    ports:
+      - "8088:80"
+    depends_on:
+      - postgres_db
+    networks:
+      - warhammer-network
+    environment:
+      - ConnectionStrings_DefaultConnection=User ID=postgres;Password=postgresPankrat;Server=postgres_db;Port=5432;Database=warhammer_tournaments;IntegratedSecurity=true;Pooling=true;
+      - ASPNETCORE_URLS=http://+:80
+      - ImagekitPublicKey=public_Mv4fOhgWEeYjUpP2B+V5tIXav14=
+      - ImagekitPrivateKey=private_IkYc+AP+K1Nl73LLzDdOIWx6fD8=
+      - ImagekitUrlEndPoint=https://ik.imagekit.io/pankrat
+        
+  postgres_db:
+    container_name: postgres-container
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgresPankrat
+      POSTGRES_DB: warhammer_tournaments
+    ports:
+      - "5433:5432"
+    restart: always
+    networks:
+      - warhammer-network
+    volumes: 
+      - postgres-data:/var/lib/postgresql/data
+        
+volumes:
+  postgres-data:
+      
