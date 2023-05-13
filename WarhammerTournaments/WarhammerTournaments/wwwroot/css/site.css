@@ -77,12 +77,24 @@ body {
     border: 1px solid #d1007e;
 }
 
+.purple-btn-custom:hover {
+    background-color: #b4026d;
+    color: #ffffff;
+    border: 1px solid #d1007e;
+}
+
 .black-btn-custom {
     border-radius: 10px;
     background-color: #000000;
     color: #ffffff;
     border: 1px solid #ffffff;
 }
+
+.black-btn-custom:hover {
+    color: #888888;
+    /*background-color: #0e0e0e;*/
+}
+
 
 /* Backgrounds */
 .bg-full-black {
