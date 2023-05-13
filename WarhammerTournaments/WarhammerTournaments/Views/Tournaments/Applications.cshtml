@@ -20,35 +20,69 @@
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
                 @foreach (var application in Model.Applications)
                 {
-                    <div class="col d-flex">
+                    <div class="col d-flex application-wrapper">
                         <div class="card d-flex mb-4 p-1 pt-3 mb-xl-0 tournament-card-bg text-white">
                             <div class="card-body">
+                                @{ Html.BeginForm("ProcessApplication", "Tournaments", new { id = application.Id }); }
                                 <h3 class="mb-4">
                                     @application.UserName
                                 </h3>
+
                                 <div class="mb-3 text-white">
-                                    <div class="mb-3 lh-1">
-                                        <i class="bi bi-star-fill"></i>
-                                        <span>@application.Elo</span>
+                                    <div class="form-group">
+                                        <div class="mb-3 lh-1">
+                                            <label asp-for="AcceptedPlayerHin" class="form-label text-white">HIN</label>
+                                            <input asp-for="AcceptedPlayerHin" class="form-control text-white form-control-grey-ng" type="text"/>
+                                            <span asp-validation-for="AcceptedPlayerHin" class="text-danger"></span>
+                                        </div>
                                     </div>
-                                    <div class="mb-3 lh-1">
-                                        <i class="bi bi-calendar-check"></i>
-                                        <span>@application.Hin</span>
+                                    <div class="form-group">
+                                        <div class="mb-3 lh-1">
+                                            <label asp-for="AcceptedPlayerElo" class="form-label text-white">ELO</label>
+                                            <input asp-for="AcceptedPlayerElo" class="form-control text-white form-control-grey-ng" type="text"/>
+                                            <span asp-validation-for="AcceptedPlayerHin" class="text-danger"></span>
+                                        </div>
                                     </div>
-                                    <div class="lh-1">
+                                    <div class="mb-4 text-hover lh-1" role="button" data-bs-toggle="modal" data-bs-target="#application-@application.UserName">
                                         <i class="bi bi-person"></i>
-                                        <span>Что то ещё</span>
+                                        <span>@application.Fraction</span>
                                     </div>
+
+                                    @* Modal *@
+                                    <div class="modal fade" id="application-@application.UserName" tabindex="-1" role="dialog" aria-labelledby="application_@application.UserName-Label" aria-hidden="true">
+                                        <div class="modal-dialog modal-xl" role="document">
+                                            <div class="modal-content bg-custom-grey">
+                                                <div class="modal-header bg-custom-grey">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Ростер @application.UserName</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <span style="white-space: pre-line">@application.Roster</span>
+                                                </div>
+                                                <div class="modal-footer bg-custom-grey">
+                                                    <button type="button" class="btn black-btn-custom" data-bs-dismiss="modal">Закрыть</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
                                 </div>
                                 <div class="row ms-auto">
                                     <div class="col-6">
+                                        <input type="submit" class="btn purple-btn-custom mb-3 ms-auto" name="action" value="Принять">
+                                        @*
                                         <a asp-area="" asp-controller="Tournaments" asp-action="AcceptApplication" asp-route-id="@application.Id" class="btn purple-btn-custom mb-3 ms-auto">Принять</a>
+                                        *@
 
                                     </div>
                                     <div class="col-6">
-                                        <a asp-area="" asp-controller="Tournaments" asp-action="RejectApplication" asp-route-id="@application.Id" class="btn black-btn-custom ms-auto">Отклонить</a>
+                                        @*<a asp-area="" asp-controller="Tournaments" asp-action="RejectApplication" asp-route-id="@application.Id" class="btn black-btn-custom ms-auto">Отклонить</a>
+                                        *@
+                                        <input type="submit" class="btn black-btn-custom mb-3 ms-auto" name="action" value="Отклонить">
                                     </div>
                                 </div>
+                                @{ Html.EndForm(); }
                             </div>
                         </div>
                     </div>

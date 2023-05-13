@@ -211,6 +211,16 @@ public class TournamentsController : Controller
         return View(applicationsVM);
     }
 
+    public async Task<IActionResult> ProcessApplication(int id, ApplicationViewModel viewModel, string action)
+    {
+        return action switch
+        {
+            "Принять" => await AcceptApplication(id, viewModel.AcceptedPlayerHin, viewModel.AcceptedPlayerElo),
+            "Отклонить" => await Delete(id),
+            _ => RedirectToAction("Applications")
+        };
+    }
+
     public async Task<IActionResult> Delete(int id)
     {
         var tournament = await _unitOfWork.TournamentRepository.Get(id);
@@ -234,26 +244,31 @@ public class TournamentsController : Controller
         return RedirectToAction("Index", "Dashboard");
     }
 
-    public async Task<IActionResult> AcceptApplication(int id)
+    public async Task<IActionResult> AcceptApplication(int id, int hin, int elo)
     {
         var application = await _unitOfWork.ApplicationRepository.Get(id);
-        var tournament = await _unitOfWork.TournamentRepository.Get(application.TournamentId);
-
         if (application != null)
         {
-            if (tournament.RegisteredParticipant == tournament.AvailableParticipant)
+            var tournament = await _unitOfWork.TournamentRepository.Get(application.TournamentId);
+
+            if (tournament != null)
             {
-                // can not add new patricipant;
-                return View("Error");
+                if (tournament.RegisteredParticipant == tournament.AvailableParticipant)
+                {
+                    // can not add new patricipant;
+                    return View("Error");
+                }
+
+                application.IsAccepted = true;
+                application.Hin = hin;
+                application.Elo = elo;
+                tournament.RegisteredParticipant += 1;
+
+                _unitOfWork.TournamentRepository.Update(tournament);
+                _unitOfWork.ApplicationRepository.Update(application);
+                await _unitOfWork.SaveChangesAsync();
+                return RedirectToAction("Applications", "Tournaments", new { @id = application.TournamentId });
             }
-
-            application.IsAccepted = true;
-            tournament.RegisteredParticipant += 1;
-
-            _unitOfWork.TournamentRepository.Update(tournament);
-            _unitOfWork.ApplicationRepository.Update(application);
-            await _unitOfWork.SaveChangesAsync();
-            return RedirectToAction("Applications", "Tournaments", new { @id = application.TournamentId });
         }
 
         return View("Error");
