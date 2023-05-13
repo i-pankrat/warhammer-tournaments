@@ -113,21 +113,38 @@ public class TournamentsController : Controller
         if (ModelState.IsValid)
         {
             var user = await _userManager.FindByIdAsync(joinViewModel.UserId);
-            var application = new Application
-            {
-                TournamentId = joinViewModel.TournamentId,
-                UserId = user.Id,
-                UserName = user.UserName,
-                IsAccepted = false,
-                Elo = 0,
-                Hin = 0,
-                Fraction = joinViewModel.Fraction,
-                Roster = joinViewModel.Roster,
-            };
 
-            await _unitOfWork.ApplicationRepository.AddAsync(application);
-            await _unitOfWork.SaveChangesAsync();
-            return RedirectToAction("Index");
+            if (user == null)
+            {
+                return View(joinViewModel);
+            }
+
+            var userApplications = await _unitOfWork.ApplicationRepository.Get(x =>
+                x.UserId == user.Id && x.TournamentId == joinViewModel.TournamentId);
+
+            if (!userApplications.Any())
+            {
+                var application = new Application
+                {
+                    TournamentId = joinViewModel.TournamentId,
+                    UserId = user.Id,
+                    UserName = user.UserName,
+                    IsAccepted = false,
+                    Elo = 0,
+                    Hin = 0,
+                    Fraction = joinViewModel.Fraction,
+                    Roster = joinViewModel.Roster,
+                };
+
+                await _unitOfWork.ApplicationRepository.AddAsync(application);
+                await _unitOfWork.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                // TODO: Show error that user has already sent application
+                return RedirectToAction("Index");
+            }
         }
 
         ModelState.AddModelError("", "Failed to add application");
