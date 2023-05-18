@@ -15,5 +15,5 @@ public class LoginViewModel
     public string Password { get; set; }
 
     public string ReturnUrl { get; set; }
-    public IList<AuthenticationScheme> ExternalLogins { get; set; }
+    public IEnumerable<AuthenticationScheme> ExternalLogins { get; set; }
 }

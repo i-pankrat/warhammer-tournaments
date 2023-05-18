@@ -73,7 +73,7 @@ public class AccountController : Controller
         var response = new LoginViewModel
         {
             ReturnUrl = Url.Action("Index", "Tournaments"),
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList()
+            ExternalLogins = await _signInManager.GetExternalAuthenticationSchemesAsync()
         };
         return View(response);
     }
@@ -132,7 +132,7 @@ public class AccountController : Controller
         var response = new RegisterViewModel
         {
             ReturnUrl = Url.Action("Index", "Tournaments"),
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList()
+            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync())
         };
 
         return View(response);
@@ -235,9 +235,8 @@ public class AccountController : Controller
         return new ChallengeResult(provider, properties);
     }
 
-    [AllowAnonymous]
-    public async Task<IActionResult>
-        ExternalLoginCallback(string? returnUrl = null, string? remoteError = null)
+    [AllowAnonymous]    
+    public async Task<IActionResult> ExternalLoginCallback(string? returnUrl = null, string? remoteError = null)
     {
         returnUrl = returnUrl ?? Url.Content("~/");
 
@@ -269,7 +268,7 @@ public class AccountController : Controller
         // If the user already has a login (i.e if there is a record in AspNetUserLogins
         // table) then sign-in the user with this external login provider
         var signInResult = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider,
-            info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+            info.ProviderKey, false, false);
 
         if (signInResult.Succeeded)
         {
@@ -296,6 +295,7 @@ public class AccountController : Controller
                     };
 
                     await _userManager.CreateAsync(user);
+                    await _userManager.AddToRoleAsync(user, UserRoles.User);
                 }
 
                 // Add a login (i.e insert a row for the user in AspNetUserLogins table)
@@ -305,11 +305,8 @@ public class AccountController : Controller
                 return LocalRedirect(returnUrl);
             }
 
-            // If we cannot find the user email we cannot continue
-            ViewBag.ErrorTitle = $"Email claim not received from: {info.LoginProvider}";
-            ViewBag.ErrorMessage = "Please contact support on Pragim@PragimTech.com";
-
-            return View("Error");
+            ViewData["Fail"] = "У вас не привяза почта к аккаунту ВКонтакте, к сожалнию вы не можете войти!";
+            return RedirectToAction("Register");
         }
     }
 }

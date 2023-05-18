@@ -13,14 +13,14 @@ using WarhammerTournaments.Interfaces;
 using WarhammerTournaments.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var configuration = builder.Configuration;
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IImageUploadService, ImageUploadService>();
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-var conn = Environment.GetEnvironmentVariable("ConnectionStrings_DefaultConnection");
+// var conn = Environment.GetEnvironmentVariable("ConnectionStrings_DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(conn,
+    options.UseNpgsql(configuration["DBConnections:DefaultConnection"],
         b => b.MigrationsAssembly("WarhammerTournaments")));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddMemoryCache();
@@ -36,8 +36,10 @@ var clientSecret = Environment.GetEnvironmentVariable("VKClientSecret");
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie()
     .AddVkontakte(options =>
     {
-        options.ClientId = clientId;
-        options.ClientSecret = clientSecret;
+        options.ClientId = configuration["Authentication:VK:ClientId"];
+        options.ClientSecret = configuration["Authentication:VK:ClientSecret"];
+        options.ApiVersion = "5.131";
+        options.Scope.Add("email");
     });
 
 /*builder.Services.AddAuthentication(options =>
@@ -49,7 +51,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 // Add Email Configuration
 
-var emailConfiguration = builder.Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
+var emailConfiguration = configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
 builder.Services.AddSingleton(emailConfiguration);
 
 builder.Services.AddScoped<IEmailService, EmailService>();
@@ -69,7 +71,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 var app = builder.Build();
 
 // Set roles and admin
-var adminConfiguration = builder.Configuration.GetSection("AdminConfiguration").Get<AdminConfiguration>();
+var adminConfiguration = configuration.GetSection("AdminConfiguration").Get<AdminConfiguration>();
 await Seed.SeedRolesAndAdmin(app, adminConfiguration);
 
 // Configure the HTTP request pipeline.

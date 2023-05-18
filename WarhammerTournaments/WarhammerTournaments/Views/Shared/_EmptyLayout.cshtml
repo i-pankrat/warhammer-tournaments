@@ -15,6 +15,14 @@
 </head>
 <body>
 
+@if (ViewData["Fail"] != null)
+{
+    <div class="alert alert-bottom alert-danger alert-dismissible fade show" role="alert">
+        <span>
+            <i class="fa fa-exclamation-triangle"></i>@ViewData["Fail"]
+        </span>
+    </div>
+}
 
 <div class="container">
     <main role="main" class="pb-3">

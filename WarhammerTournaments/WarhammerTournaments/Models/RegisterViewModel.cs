@@ -29,5 +29,5 @@ public class RegisterViewModel
     public string ConfirmPassword { get; set; }
 
     public string ReturnUrl { get; set; }
-    public IList<AuthenticationScheme> ExternalLogins { get; set; }
+    public IEnumerable<AuthenticationScheme> ExternalLogins { get; set; }
 }
