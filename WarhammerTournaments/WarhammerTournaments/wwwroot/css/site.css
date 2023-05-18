@@ -152,6 +152,17 @@ body {
     width: 100%;
 }
 
+/* Alerts */
+.alert {
+    position: fixed;
+    bottom: 60px;
+    right: 10px;
+}
+
+.alert .fa {
+    margin-right: .5em;
+}
+
 /* Footer */
 .footer {
     position: absolute;

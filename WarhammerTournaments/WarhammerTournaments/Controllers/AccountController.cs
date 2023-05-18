@@ -179,6 +179,7 @@ public class AccountController : Controller
             return View(registerViewModel);
         }
 
+        TempData["Success"] = "Вам удалось зарегистрироваться, подтвердите свою почту!";
         return RedirectToAction("Index", "Tournaments");
     }
 
