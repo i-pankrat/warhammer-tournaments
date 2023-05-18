@@ -31,9 +31,13 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFramework
     .AddDefaultTokenProviders();
 
 // User auth
-var clientId = Environment.GetEnvironmentVariable("VKClientId");
-var clientSecret = Environment.GetEnvironmentVariable("VKClientSecret");
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie()
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.Cookie.SameSite = SameSiteMode.None;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+        options.Cookie.IsEssential = true;
+    })
     .AddVkontakte(options =>
     {
         options.ClientId = configuration["Authentication:VK:ClientId"];
@@ -69,6 +73,8 @@ builder.Services.Configure<IdentityOptions>(options =>
 });
 
 var app = builder.Build();
+
+app.UseCookiePolicy();
 
 // Set roles and admin
 var adminConfiguration = configuration.GetSection("AdminConfiguration").Get<AdminConfiguration>();
