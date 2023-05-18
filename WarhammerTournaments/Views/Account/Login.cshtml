@@ -16,6 +16,9 @@
                         </div>
                         <div>
                             <form asp-action="Login" class="m-5 mb-3">
+                                <input type="hidden" id="ReturnUrl" name="ReturnUrl" asp-for="ReturnUrl"/>
+                                <input type="hidden" id="ExternalLogins" name="ExternalLogins" asp-for="ExternalLogins"/>
+
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <div class="form-group">
                                     <div class="mb-3">
@@ -36,6 +39,9 @@
                                 </div>
                             </form>
                             <form class="mx-5 mb-3" method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">
+                                <input type="hidden" id="ReturnUrl" name="ReturnUrl" asp-for="ReturnUrl"/>
+                                <input type="hidden" id="ExternalLogins" name="ExternalLogins" asp-for="ExternalLogins"/>
+
                                 <div class="row row-cols-3 d-flex justify-content-center">
                                     @foreach (var provider in Model.ExternalLogins)
                                     {
