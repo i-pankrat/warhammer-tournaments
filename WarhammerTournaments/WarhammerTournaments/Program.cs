@@ -30,8 +30,15 @@ builder.Services.AddSession();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
-// Cookie for user auth
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+// User auth
+var clientId = Environment.GetEnvironmentVariable("VKClientId");
+var clientSecret = Environment.GetEnvironmentVariable("VKClientSecret");
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie()
+    .AddVkontakte(options =>
+    {
+        options.ClientId = clientId;
+        options.ClientSecret = clientSecret;
+    });
 
 /*builder.Services.AddAuthentication(options =>
 {

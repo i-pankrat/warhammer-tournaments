@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WarhammerTournaments.ViewModels;
@@ -26,4 +27,7 @@ public class RegisterViewModel
     [Required(ErrorMessage = "Необходимо повторить пароль")]
     [Compare("Password", ErrorMessage = "Пароли не совпадают")]
     public string ConfirmPassword { get; set; }
+
+    public string ReturnUrl { get; set; }
+    public IList<AuthenticationScheme> ExternalLogins { get; set; }
 }
