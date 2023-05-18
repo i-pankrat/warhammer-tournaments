@@ -159,6 +159,12 @@ body {
     right: 10px;
 }
 
+.alert-bottom {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
+
 .alert .fa {
     margin-right: .5em;
 }

@@ -94,8 +94,12 @@ public class AccountController : Controller
                 var result = await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
                 if (result.Succeeded)
                 {
+                    TempData["Success"] = "Вы вошли!";
                     return RedirectToAction("Index", "Tournaments");
                 }
+
+                ViewData["Fail"] = "Скорее всего вы не подтвердили свою почту!";
+                return View(loginViewModel);
             }
 
             /*
@@ -103,11 +107,10 @@ public class AccountController : Controller
              * That's bad pattern to use TempData (LoginViewModel.PasswordIsCorrect ... ?)
              */
 
-            TempData["Error"] = "Wrong credentials. Please, try again";
             return View(loginViewModel);
         }
 
-        TempData["Error"] = "Wrong credentials. Please, try again";
+        ViewData["Fail"] = "Неверная почта или пароль. Попробуйте снова!";
 
         return View(loginViewModel);
         // return RedirectToAction("Register");
