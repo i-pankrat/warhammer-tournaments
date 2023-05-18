@@ -10,7 +10,6 @@ using WarhammerTournaments.ViewModels;
 
 namespace WarhammerTournaments.Controllers;
 
-[Authorize(Roles = $"{UserRoles.Organizer}, {UserRoles.Admin}")]
 public class TournamentsController : Controller
 {
     private readonly IUnitOfWork _unitOfWork;
@@ -49,6 +48,7 @@ public class TournamentsController : Controller
     }
 
     [HttpGet]
+    [Authorize(Roles = $"{UserRoles.Organizer}, {UserRoles.Admin}")]
     public async Task<IActionResult> Create()
     {
         var curUserId = _httpContextAccessor.HttpContext.User.GetUserId();
@@ -62,6 +62,7 @@ public class TournamentsController : Controller
     }
 
     [HttpPost]
+    [Authorize(Roles = $"{UserRoles.Organizer}, {UserRoles.Admin}")]
     public async Task<IActionResult> Create(TournamentViewModel tournamentViewModel)
     {
         if (ModelState.IsValid)
@@ -95,7 +96,7 @@ public class TournamentsController : Controller
     }
 
     [HttpGet]
-    [Authorize(Roles = $"{UserRoles.Organizer}, {UserRoles.Admin}, {UserRoles.User}")]
+    [Authorize(Roles = $"{UserRoles.User}, {UserRoles.Organizer}, {UserRoles.Admin}")]
     public async Task<IActionResult> Join(int id)
     {
         var curUserId = _httpContextAccessor.HttpContext.User.GetUserId();
@@ -109,7 +110,7 @@ public class TournamentsController : Controller
     }
 
     [HttpPost]
-    [Authorize(Roles = $"{UserRoles.Organizer}, {UserRoles.Admin}, {UserRoles.User}")]
+    [Authorize(Roles = $"{UserRoles.User}, {UserRoles.Organizer}, {UserRoles.Admin}")]
     public async Task<IActionResult> Join(JoinViewModel joinViewModel)
     {
         if (ModelState.IsValid)
@@ -154,6 +155,7 @@ public class TournamentsController : Controller
     }
 
     [HttpGet]
+    [Authorize(Roles = $"{UserRoles.Organizer}, {UserRoles.Admin}")]
     public async Task<IActionResult> Edit(int id)
     {
         var tournament = await _unitOfWork.TournamentRepository.Get(id);
@@ -180,6 +182,7 @@ public class TournamentsController : Controller
 
 
     [HttpPost]
+    [Authorize(Roles = $"{UserRoles.Organizer}, {UserRoles.Admin}")]
     public async Task<IActionResult> Edit(int id, TournamentViewModel tournamentViewModel)
     {
         if (!ModelState.IsValid)
@@ -218,6 +221,7 @@ public class TournamentsController : Controller
     }
 
     [HttpGet]
+    [Authorize(Roles = $"{UserRoles.Organizer}, {UserRoles.Admin}")]
     public async Task<IActionResult> Applications(int id)
     {
         var applications = await _unitOfWork.ApplicationRepository
@@ -230,6 +234,7 @@ public class TournamentsController : Controller
         return View(applicationsVM);
     }
 
+    [Authorize(Roles = $"{UserRoles.Organizer}, {UserRoles.Admin}")]
     public async Task<IActionResult> ProcessApplication(int id, ApplicationViewModel viewModel, string action)
     {
         return action switch
@@ -240,6 +245,7 @@ public class TournamentsController : Controller
         };
     }
 
+    [Authorize(Roles = $"{UserRoles.Organizer}, {UserRoles.Admin}")]
     public async Task<IActionResult> Delete(int id)
     {
         var tournament = await _unitOfWork.TournamentRepository.Get(id);
@@ -255,6 +261,7 @@ public class TournamentsController : Controller
         return View("Error");
     }
 
+    [Authorize(Roles = $"{UserRoles.Organizer}, {UserRoles.Admin}")]
     public async Task<IActionResult> DeleteAllApplications(int id)
     {
         var applications = await _unitOfWork.ApplicationRepository.Get(x => x.TournamentId == id & !x.IsAccepted);
@@ -263,6 +270,7 @@ public class TournamentsController : Controller
         return RedirectToAction("Index", "Dashboard");
     }
 
+    [Authorize(Roles = $"{UserRoles.Organizer}, {UserRoles.Admin}")]
     public async Task<IActionResult> AcceptApplication(int id, int hin, int elo)
     {
         var application = await _unitOfWork.ApplicationRepository.Get(id);
@@ -293,6 +301,7 @@ public class TournamentsController : Controller
         return View("Error");
     }
 
+    [Authorize(Roles = $"{UserRoles.Organizer}, {UserRoles.Admin}")]
     public async Task<IActionResult> RejectApplication(int id)
     {
         var application = await _unitOfWork.ApplicationRepository.Get(id);
