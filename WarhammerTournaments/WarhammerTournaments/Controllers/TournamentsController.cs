@@ -95,6 +95,7 @@ public class TournamentsController : Controller
     }
 
     [HttpGet]
+    [Authorize(Roles = $"{UserRoles.Organizer}, {UserRoles.Admin}, {UserRoles.User}")]
     public async Task<IActionResult> Join(int id)
     {
         var curUserId = _httpContextAccessor.HttpContext.User.GetUserId();
@@ -108,6 +109,7 @@ public class TournamentsController : Controller
     }
 
     [HttpPost]
+    [Authorize(Roles = $"{UserRoles.Organizer}, {UserRoles.Admin}, {UserRoles.User}")]
     public async Task<IActionResult> Join(JoinViewModel joinViewModel)
     {
         if (ModelState.IsValid)
