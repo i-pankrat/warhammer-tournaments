@@ -49,9 +49,9 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
-    options.Password.RequiredLength = 10;
+    options.Password.RequiredLength = 8;
     options.Password.RequiredUniqueChars = 1;
-    options.Password.RequireDigit = true;
+    options.Password.RequireDigit = false;
     options.Password.RequireLowercase = false;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequireUppercase = false;

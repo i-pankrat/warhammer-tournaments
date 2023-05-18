@@ -29,6 +29,38 @@ public class AccountController : Controller
         _emailService = emailService;
     }
 
+    [HttpPost]
+    public async Task<JsonResult> IsEmailAddressExist(string emailAddress)
+    {
+        var user = await _userManager.FindByEmailAsync(emailAddress);
+        return new JsonResult(user == null);
+    }
+
+    [HttpPost]
+    public async Task<JsonResult> IsUserNameExist(string userName)
+    {
+        var user = await _userManager.FindByNameAsync(userName);
+        return new JsonResult(user == null);
+    }
+
+    [HttpPost]
+    public JsonResult IsPasswordValid(string password)
+    {
+        if (password.Length < 8)
+        {
+            return Json("Пароль должен содержать минимум 8 символов");
+        }
+
+        return Json(true);
+    }
+
+    [HttpPost]
+    public async Task<JsonResult> PasswordValidation(string userName)
+    {
+        var user = await _userManager.FindByNameAsync(userName);
+        return new JsonResult(user != null);
+    }
+
     [HttpGet]
     public IActionResult Login()
     {
@@ -105,13 +137,14 @@ public class AccountController : Controller
             return View(registerViewModel);
 
 
-        var user = await _userManager.FindByEmailAsync(registerViewModel.EmailAddress);
+        var userEmail = await _userManager.FindByEmailAsync(registerViewModel.EmailAddress);
+        var userName = await _userManager.FindByNameAsync(registerViewModel.Username);
 
         // Check if user exists
-        if (user != null)
+        if (userEmail != null || userName != null)
         {
             // Not the best way of dealing with the situation
-            TempData["Error"] = "This email address is already in use";
+            TempData["Error"] = "This email or username is already in use";
 
             return View(registerViewModel);
         }
@@ -120,7 +153,7 @@ public class AccountController : Controller
         var newUser = new ApplicationUser
         {
             Email = registerViewModel.EmailAddress,
-            UserName = registerViewModel.EmailAddress
+            UserName = registerViewModel.Username
         };
 
         var newUserResponse = await _userManager.CreateAsync(newUser, registerViewModel.Password);
