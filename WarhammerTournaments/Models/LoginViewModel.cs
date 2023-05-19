@@ -6,11 +6,11 @@ namespace WarhammerTournaments.Models;
 public class LoginViewModel
 {
     // Validation annotation
-    [Display(Name = "EmailAddress")]
-    [Required(ErrorMessage = "Email address is required")]
+    [Display(Name = "Почта")]
+    [Required(ErrorMessage = "Необходимо ввести почту")]
     public string EmailAddress { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Необходимо ввести пароль")]
     [DataType(DataType.Password)]
     public string Password { get; set; }
 
