@@ -23,6 +23,6 @@ public class DashboardController : Controller
         {
             Tournaments = userTournaments
         };*/
-        return View(userTournaments);
+        return View(userTournaments.OrderBy(x => x.Date));
     }
 }

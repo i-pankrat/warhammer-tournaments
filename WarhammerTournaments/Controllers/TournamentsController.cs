@@ -32,7 +32,7 @@ public class TournamentsController : Controller
     public async Task<IActionResult> Index()
     {
         var tournaments = await _unitOfWork.TournamentRepository.GetAll();
-        return View(tournaments);
+        return View(tournaments.OrderBy(x => x.Date));
     }
 
     [AllowAnonymous]
