@@ -210,22 +210,38 @@ public class TournamentsController : Controller
         var oldTournament = await _unitOfWork.TournamentRepository.GetNoTracking(tournamentViewModel.Id);
         if (oldTournament != null)
         {
-            var deleteResult = await _imageUploadService.DeleteAsync(oldTournament.ImageId, oldTournament.ImageUrl);
-            var uploadResult = await _imageUploadService.UploadAsync(tournamentViewModel.Image);
+            Result uploadResult;
+
+            if (tournamentViewModel.Image != null)
+            {
+                var deleteResult = await _imageUploadService.DeleteAsync(oldTournament.ImageId, oldTournament.ImageUrl);
+                uploadResult = await _imageUploadService.UploadAsync(tournamentViewModel.Image);
+            }
+            else
+            {
+                uploadResult = new Result
+                {
+                    url = ImageUploadService.DefaultImageUrl,
+                    fileId = String.Empty
+                };
+            }
 
             var tournament = new Tournament
             {
                 Id = tournamentViewModel.Id,
-                Title = tournamentViewModel.Title,
-                Description = tournamentViewModel.Description,
                 OwnerId = tournamentViewModel.OwnerId,
                 OwnerUserName = tournamentViewModel.OwnerUserName,
-                Address = tournamentViewModel.Address,
+                Title = tournamentViewModel.Title,
+                Description = tournamentViewModel.Description,
+                Rules = tournamentViewModel.Rules,
                 AvailableParticipant = tournamentViewModel.AvailableParticipant,
+                RegisteredParticipant = 0,
+                Participants = new List<Application>(),
+                Address = tournamentViewModel.Address,
                 Date = tournamentViewModel.Date,
                 ImageUrl = uploadResult.url,
                 ImageId = uploadResult.fileId,
-                EntranceFee = tournamentViewModel.EntranceFee
+                EntranceFee = tournamentViewModel.EntranceFee,
             };
 
             _unitOfWork.TournamentRepository.Update(tournament);
@@ -271,7 +287,7 @@ public class TournamentsController : Controller
             var deleteResult = await _imageUploadService.DeleteAsync(tournament.ImageId, tournament.ImageUrl);
             _unitOfWork.TournamentRepository.Remove(tournament);
             await _unitOfWork.SaveChangesAsync();
-            return RedirectToAction("Applications");
+            return RedirectToAction("Index", "Dashboard");
         }
 
         return View("Error");
