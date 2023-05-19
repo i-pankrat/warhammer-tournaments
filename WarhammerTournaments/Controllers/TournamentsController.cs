@@ -6,6 +6,7 @@ using WarhammerTournaments.DAL.Data;
 using WarhammerTournaments.DAL.Entity;
 using WarhammerTournaments.Interfaces;
 using WarhammerTournaments.Models;
+using WarhammerTournaments.Services;
 using WarhammerTournaments.ViewModels;
 
 namespace WarhammerTournaments.Controllers;
@@ -68,7 +69,21 @@ public class TournamentsController : Controller
     {
         if (ModelState.IsValid)
         {
-            var result = await _imageUploadService.UploadAsync(tournamentViewModel.Image);
+            Result result;
+
+            if (tournamentViewModel.Image != null)
+            {
+                result = await _imageUploadService.UploadAsync(tournamentViewModel.Image);
+            }
+            else
+            {
+                result = new Result
+                {
+                    url = ImageUploadService.DefaultImageUrl,
+                    fileId = ""
+                };
+            }
+
             var user = await _userManager.FindByIdAsync(tournamentViewModel.OwnerId);
             var tournament = new Tournament
             {
@@ -195,7 +210,7 @@ public class TournamentsController : Controller
         var oldTournament = await _unitOfWork.TournamentRepository.GetNoTracking(tournamentViewModel.Id);
         if (oldTournament != null)
         {
-            var deleteResult = await _imageUploadService.DeleteAsync(oldTournament.ImageId);
+            var deleteResult = await _imageUploadService.DeleteAsync(oldTournament.ImageId, oldTournament.ImageUrl);
             var uploadResult = await _imageUploadService.UploadAsync(tournamentViewModel.Image);
 
             var tournament = new Tournament
@@ -253,7 +268,7 @@ public class TournamentsController : Controller
 
         if (tournament != null)
         {
-            var deleteResult = await _imageUploadService.DeleteAsync(tournament.ImageId);
+            var deleteResult = await _imageUploadService.DeleteAsync(tournament.ImageId, tournament.ImageUrl);
             _unitOfWork.TournamentRepository.Remove(tournament);
             await _unitOfWork.SaveChangesAsync();
             return RedirectToAction("Applications");

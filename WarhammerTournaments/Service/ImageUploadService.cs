@@ -6,6 +6,12 @@ namespace WarhammerTournaments.Services;
 public class ImageUploadService : IImageUploadService
 {
     private readonly ImagekitClient _imagekitClient;
+    public static string DefaultImageUrl { get; }
+
+    static ImageUploadService()
+    {
+        DefaultImageUrl = "https://ik.imagekit.io/pankrat/DefaultImage.jpg?updatedAt=1684483827019";
+    }
 
     public ImageUploadService()
     {
@@ -40,8 +46,23 @@ public class ImageUploadService : IImageUploadService
         return uploadResult;
     }
 
-    public async Task<ResultDelete> DeleteAsync(string fileId)
+    public async Task<ResultDelete?> DeleteAsync(string fileId, string url)
     {
-        return await _imagekitClient.DeleteFileAsync(fileId);
+        if (url != DefaultImageUrl)
+        {
+            if (fileId == null || fileId == String.Empty)
+            {
+                return null;
+            }
+
+            return await _imagekitClient.DeleteFileAsync(fileId);
+        }
+
+        return null;
+    }
+
+    public Result Find(string url)
+    {
+        return _imagekitClient.GetFileDetail(url);
     }
 }
