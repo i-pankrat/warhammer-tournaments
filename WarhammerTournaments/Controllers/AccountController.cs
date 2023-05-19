@@ -288,9 +288,18 @@ public class AccountController : Controller
 
                 if (user == null)
                 {
+                    var userName = email.Split("@").First();
+                    var counter = 1;
+
+                    while (await _userManager.FindByNameAsync(userName) != null)
+                    {
+                        userName = String.Concat(userName, counter);
+                        counter++;
+                    }
+                    
                     user = new ApplicationUser
                     {
-                        UserName = info.Principal.FindFirstValue(ClaimTypes.Email),
+                        UserName = userName,
                         Email = info.Principal.FindFirstValue(ClaimTypes.Email)
                     };
 
