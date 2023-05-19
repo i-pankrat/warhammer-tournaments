@@ -82,6 +82,7 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
 });
 
 var app = builder.Build();
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 app.UseCookiePolicy();
 app.UseForwardedHeaders(new ForwardedHeadersOptions
