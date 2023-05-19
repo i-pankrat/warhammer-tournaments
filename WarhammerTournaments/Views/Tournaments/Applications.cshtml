@@ -43,13 +43,13 @@
                                             <span asp-validation-for="AcceptedPlayerHin" class="text-danger"></span>
                                         </div>
                                     </div>
-                                    <div class="mb-4 text-hover lh-1" role="button" data-bs-toggle="modal" data-bs-target="#application-@application.UserName">
+                                    <div class="mb-4 text-hover lh-1" role="button" data-bs-toggle="modal" data-bs-target="#application-@application.UserId">
                                         <i class="bi bi-person"></i>
                                         <span>@application.Fraction</span>
                                     </div>
 
                                     @* Modal *@
-                                    <div class="modal fade" id="application-@application.UserName" tabindex="-1" role="dialog" aria-labelledby="application_@application.UserName-Label" aria-hidden="true">
+                                    <div class="modal fade" id="application-@application.UserId" tabindex="-1" role="dialog" aria-labelledby="application_@application.UserName-Label" aria-hidden="true">
                                         <div class="modal-dialog modal-xl" role="document">
                                             <div class="modal-content bg-custom-grey">
                                                 <div class="modal-header bg-custom-grey">

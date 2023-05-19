@@ -69,10 +69,10 @@
                     @foreach (var participant in @Model.Participants)
                     {
                         <tr>
-                            <th class="text-hover" scope="row" role="button" data-bs-toggle="modal" data-bs-target="#roster-@participant.UserName">@participant.UserName</th>
+                            <th class="text-hover" scope="row" role="button" data-bs-toggle="modal" data-bs-target="#roster-@participant.Id">@participant.UserName</th>
 
                             @* Modal *@
-                            <div class="modal fade" id="roster-@participant.UserName" tabindex="-1" role="dialog" aria-labelledby="roster_@participant.UserName-Label" aria-hidden="true">
+                            <div class="modal fade" id="roster-@participant.Id" tabindex="-1" role="dialog" aria-labelledby="roster_@participant.UserName-Label" aria-hidden="true">
                                 <div class="modal-dialog modal-xl" role="document">
                                     <div class="modal-content bg-custom-grey">
                                         <div class="modal-header bg-custom-grey">
