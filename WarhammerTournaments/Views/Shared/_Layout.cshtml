@@ -53,6 +53,9 @@
                 {
                     <ul class="nav navbar-nav ml-auto">
                         <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Profile" asp-action="Index">Профиль</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Logout">Выйти</a>
                         </li>
                     </ul>
@@ -78,7 +81,9 @@
 @if (TempData["Success"] != null)
 {
     <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <span><i class="fa fa-check-circle"></i>@TempData["Success"]</span>
+        <span>
+            <i class="fa fa-check-circle"></i>@TempData["Success"]
+        </span>
     </div>
 }
 

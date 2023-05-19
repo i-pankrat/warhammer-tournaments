@@ -1,0 +1,36 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model ProfileViewModel
+
+
+<div class="container-fluid bg-full-black">
+    <div class="row d-flex justify-content-center bg-transparent pt-5 pb-3 px-5">
+        <div class="row">
+            <div class="col">
+                <h1 class="text-white mb-5 text-center">Профиль</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col p-3">
+                <form method="post" asp-controller="Profile" asp-action="Index" enctype="multipart/form-data">
+                    <input type="hidden" id="UserId" name="UserId" asp-for="UserId"/>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="UserName" class="form-label text-white">Имя пользователя</label>
+                                <input asp-for="UserName" class="form-control text-white" placeholder="Имя пользователя">
+                                <span asp-validation-for="UserName" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row d-flex justify-content-center">
+                        <div class="col col-sm-6 col-md-4 col-lg-3 col-xl-2 d-flex justify-content-center">
+                            <button type="submit" class="btn purple-btn-custom">Сохранить</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
