@@ -26,7 +26,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label asp-for="Date" class="form-label text-white">Дата проведения</label>
-                                <input asp-for="Date" class="form-control text-white" placeholder="Дата проведения">
+                                <input asp-for="Date"  class="form-control text-white"  id="date" asp-format="{0:yyyy-MM-dd HH:mm}" placeholder="Дата проведения"/>
                                 <span asp-validation-for="Date" class="text-danger"></span>
                             </div>
                         </div>

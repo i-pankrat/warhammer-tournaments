@@ -56,7 +56,8 @@ public class TournamentsController : Controller
         var tournamentViewModel = new TournamentViewModel
         {
             OwnerUserName = user.UserName,
-            OwnerId = curUserId
+            OwnerId = curUserId,
+            Date = DateTime.Now
         };
         return View(tournamentViewModel);
     }
