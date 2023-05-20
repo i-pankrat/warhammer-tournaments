@@ -186,6 +186,7 @@ public class TournamentsController : Controller
             Description = tournament.Description,
             OwnerId = tournament.OwnerId,
             OwnerUserName = tournament.OwnerId,
+            Rules = tournament.Rules,
             Address = tournament.Address,
             AvailableParticipant = tournament.AvailableParticipant,
             Date = tournament.Date,
